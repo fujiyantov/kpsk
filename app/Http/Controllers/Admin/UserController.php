@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Position;
 use Illuminate\Http\Request;
 use App\Rules\MatchOldPassword;
 use App\Http\Controllers\Controller;
-use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Hash;
@@ -22,10 +19,6 @@ class UserController extends Controller
         if (request()->ajax()) {
             $query = User::where('id', '!=', 1)->latest()->get();
 
-            /**
-             * old
-             * <a class="btn btn-primary btn-xs" href="' . route('user.edit', $item->id) . '"><i class="fas fa-edit"></i> &nbsp; Ubah</a>
-             */
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
                     return '
@@ -52,7 +45,24 @@ class UserController extends Controller
                                 </div>';
                 })
                 ->editColumn('position', function ($item) {
-                    return $item->role_id != null ? $item->position->name : '-';
+                    switch ($item->role_id) {
+                        case '2':
+                            $strname = 'Dekan';
+                            break;
+
+                        case '3':
+                            $strname = 'Psiklog';
+                            break;
+
+                        case '4':
+                            $strname = 'User';
+                            break;
+
+                        default:
+                            $strname = 'Dekan';
+                            break;
+                    }
+                    return $strname;
                 })
                 ->addIndexColumn()
                 ->removeColumn('id')
@@ -60,7 +70,21 @@ class UserController extends Controller
                 ->make();
         }
 
-        $positions = Role::where('id', '!=', 1)->get();
+        $positions = collect([
+            [
+                'id' => 2,
+                'name' => 'dekan',
+            ],
+            [
+                'id' => 3,
+                'name' => 'psikolog'
+            ],
+            [
+                'id' => 4,
+                'name' => 'patient',
+            ]
+        ]);
+
         $users = User::where('id', '!=', 1)->get();
 
         return view('pages.admin.user.index', [
@@ -83,9 +107,8 @@ class UserController extends Controller
             'password' => 'required|min:5|max:255',
         ]);
 
-        // $validatedData['password'] = Hash::make($validatedData['password']);
-        $validatedData['password'] = Hash::make('password');
-        $validatedData['role_id'] = 2;
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['role_id'] = $validatedData['position_id'];
 
         User::create($validatedData);
 
@@ -120,20 +143,23 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email',
             'position_id' => 'required|numeric|min:1',
-            'password' => 'min:5|max:255',
+            'password' => 'nullable|min:5|max:255',
         ]);
 
         $item = User::findOrFail($id);
         $item->name = $request->name;
         $item->email = $request->email;
-        $item->position_id = $request->position_id;
-        $item->password = Hash::make($request->password);
+        $item->role_id = $request->position_id;
+        if (isset($request->password)) {
+
+            $item->password = Hash::make($request->password);
+        }
         $item->save();
-        // $item->update($validatedData);
 
         return redirect()
             ->route('user.index')
@@ -161,8 +187,6 @@ class UserController extends Controller
 
         $id = $request->id;
         $item = User::findOrFail($id);
-
-        //dd($item);
 
         if ($request->file('profile')) {
             Storage::delete($item->profile);

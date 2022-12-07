@@ -115,7 +115,7 @@
                                 <label for="post_id">Jabatan</label>
                                 <select name="position_id" class="form-control">
                                     @foreach ($positions as $position)
-                                        <option value="{{ $position->id }}">{{ $position->name }}</option>
+                                        <option value="{{ $position['id'] }}">{{ $position['name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -135,7 +135,7 @@
             $id = $item->id;
             $name = $item->name;
             $email = $item->email;
-            $position_id = $item->position_id;
+            $position_id = $item->role_id;
         @endphp
         <div class="modal fade" id="updateModal{{ $id }}" role="dialog" aria-labelledby="createModal"
             aria-hidden="true" style="overflow:hidden;">
@@ -174,8 +174,8 @@
                                     <label for="post_id">Jabatan</label>
                                     <select name="position_id" class="form-control">
                                         @foreach ($positions as $val)
-                                            <option value="{{ $val->id }}"
-                                                @if ($val->id == $position_id) selected @endif>{{ $val->name }}
+                                            <option value="{{ $val['id'] }}"
+                                                @if ($val['id'] == $position_id) selected @endif>{{ $val['name'] }}
                                             </option>
                                         @endforeach
                                     </select>

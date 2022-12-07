@@ -55,7 +55,7 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="me-3">
-                                        <div class="-75 small">Total Proposal Masuk</div>
+                                        <div class="-75 small">Total</div>
                                         <div class="text-lg fw-bold">{{ $masuk }}</div>
                                     </div>
                                     <i class="feather-xl -50" data-feather="download"></i>
@@ -95,7 +95,7 @@
                                 <div class="col-xl-8 col-xxl-12">
                                     <div class="text-center text-xl-start text-xxl-center mb-4 mb-xl-0 mb-xxl-4">
                                         <h1 class="text-primary">Selamat Datang {{ Auth::user()->name }}!</h1>
-                                        <p class="text-gray-700 mb-0">Di Website Aplikasi Surat Masuk dan Keluar</p>
+                                        <p class="text-gray-700 mb-0">Di Website Aplikasi</p>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-xxl-12 text-center"><img class="img-fluid"

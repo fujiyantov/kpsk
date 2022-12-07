@@ -20,8 +20,11 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('profile')->nullable();
-            $table->unsignedBigInteger('role_id');
-            $table->unsignedBigInteger('position_id')->nullable();
+            $table->string('full_name')->nullable();
+            $table->string('no_telp')->nullable();
+            $table->string('bop')->nullable();
+            $table->string('bod')->nullable();
+            $table->unsignedBigInteger('role_id'); // admin, dekanat, psikolog, pasien
             $table->rememberToken();
             $table->timestamps();
         });

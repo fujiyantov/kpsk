@@ -3,16 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\PrintController;
-use App\Http\Controllers\Admin\LetterController;
-use App\Http\Controllers\Admin\MemberController;
-use App\Http\Controllers\Admin\SenderController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\DisposisiController;
-use App\Http\Controllers\Admin\DepartmentController;
-use App\Http\Controllers\Admin\ProposalInController;
-use App\Http\Controllers\Admin\ProposalOutController;
+use App\Http\Controllers\Admin\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,31 +36,7 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin-dashboard');
 
-        //
-        // Route::resource('/disposisi', DisposisiController::class);
-        Route::resource('/proposal-keluar', ProposalOutController::class);
-        Route::resource('/proposal-masuk', ProposalInController::class);
-        Route::resource('/anggota', MemberController::class);
-
-        // next
-        Route::resource('/department', DepartmentController::class);
-        Route::resource('/sender', SenderController::class);
-        Route::resource('/letter', LetterController::class, [
-            'except' => ['show']
-        ]);
-
-        Route::post('validasi/{letter_id}', [ProposalInController::class, 'validasi'])->name('validasi');
-        Route::post('disposisi/{letter_id}', [ProposalInController::class, 'disposisi'])->name('disposisi');
-
-        Route::get('letter/surat-masuk', [LetterController::class, 'incoming_mail'])->name('surat-masuk');
-        Route::get('letter/surat-keluar', [LetterController::class, 'outgoing_mail'])->name('surat-keluar');
-
-        Route::get('letter/surat/{id}', [LetterController::class, 'show'])->name('detail-surat');
-        Route::get('letter/download/{id}', [LetterController::class, 'download_letter'])->name('download-surat');
-
-        //print
-        Route::get('print/surat-masuk', [PrintController::class, 'index'])->name('print-surat-masuk');
-        Route::get('print/surat-keluar', [PrintController::class, 'outgoing'])->name('print-surat-keluar');
+        Route::resource('/news', NewsController::class);
 
         Route::resource('user', UserController::class);
         Route::resource('setting', SettingController::class, [

@@ -49,22 +49,15 @@
             @php
                 $roleID = [1, 2, 3, 4, 5];
             @endphp
-            @if (in_array(Auth::user()->role_id, $roleID))
-                <a class="nav-link {{ request()->is('admin/proposal-keluar*') ? 'active' : '' }}"
-                    href="{{ route('proposal-keluar.index') }}">
-                    <div class="nav-link-icon"><i data-feather="upload"></i></div>
-                    Propsal Keluar
-                </a>
-            @endif
-            <a class="nav-link {{ request()->is('admin/proposal-masuk*') ? 'active' : '' }}"
-                href="{{ route('proposal-masuk.index') }}">
-                <div class="nav-link-icon"><i data-feather="download"></i></div>
-                Proposal Masuk
+            <a class="nav-link {{ request()->is('admin/news*') ? 'active' : '' }}"
+                href="{{ route('news.index') }}">
+                <div class="nav-link-icon"><i data-feather="folder"></i></div>
+                Artikel
             </a>
             <a class="nav-link {{ request()->is('admin/setting*') ? 'active' : '' }}"
                 href="{{ route('setting.index') }}">
                 <div class="nav-link-icon"><i data-feather="lock"></i></div>
-                Account
+                Akun
             </a>
         </div>
     </div>
