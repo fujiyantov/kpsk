@@ -32,7 +32,7 @@ Route::post('/register', [LoginController::class, 'registerReview'])->name('regi
 
 //Admin
 Route::prefix('admin')
-    ->middleware('auth')
+    ->middleware('auth:web')
     ->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin-dashboard');
 

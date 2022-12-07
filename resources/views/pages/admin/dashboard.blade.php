@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex align-items-center justify-content-between small">
-                                <a class=" stretched-link" href="{{ route('proposal-masuk.index') }}">Selengkapnya</a>
+                                <a class=" stretched-link" href="#">Selengkapnya</a>
                                 <div class=""><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>

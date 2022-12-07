@@ -25,8 +25,8 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+        if (Auth::guard('web')->attempt($credentials)) {
+            $user = Auth::guard('web')->user();
             
             if (in_array($user->role_id, [1, 2])) {
                 $request->session()->regenerate();
@@ -42,7 +42,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
@@ -71,16 +71,6 @@ class LoginController extends Controller
 
         DB::beginTransaction();
         User::create($credentials);
-
-        /* $array = [
-            'email' => $request->email,
-            'password' => $request->password
-        ];
-
-        if (Auth::attempt($array)) {
-            $request->session()->regenerate();
-            return redirect()->intended('admin/dashboard');
-        } */
 
         DB::commit();
 
