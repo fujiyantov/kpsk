@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\NewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +18,16 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::group([
-    // 'middleware' => 'api',
+    'middleware' => 'api',
 ], function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');;
     Route::post('refresh', [AuthController::class, 'refresh'])->name('auth.refresh');;
     Route::post('me', [AuthController::class, 'me'])->name('auth.me');;
+
+    Route::group([
+        'prefix' => 'news'
+    ], function () {
+        Route::get('/', [NewsController::class, 'index']);
+        Route::get('/{id}', [NewsController::class, 'show']);
+    });
 });
