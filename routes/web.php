@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\TopicController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\ScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +38,9 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin-dashboard');
 
+        Route::resource('/schedules', ScheduleController::class);
         Route::resource('/news', NewsController::class);
+        Route::resource('/topics', TopicController::class);
 
         Route::resource('user', UserController::class);
         Route::resource('setting', SettingController::class, [

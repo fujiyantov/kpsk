@@ -7,10 +7,10 @@
             <!-- Profile -->
             <a class="nav-link" href="{{ route('setting.index') }}">
                 <!-- Profile picture image-->
-                @if (Auth::user()->profile != null)
+                {{-- @if (Auth::user()->profile != null)
                     <img class="img rounded-circle" width="75" src="{{ Storage::url(Auth::user()->profile) }}"
                         alt="" />
-                @else
+                @else --}}
                     <div class="row">
                         <div class="col-xxl-6 col-xl-12">
                             <img class="img rounded-circle" width="75"
@@ -21,7 +21,7 @@
                             </p>
                         </div>
                     </div>
-                @endif
+                {{-- @endif --}}
             </a>
 
             <!-- Sidenav Menu Heading (Core)-->
@@ -33,27 +33,32 @@
                 Beranda
             </a>
 
-            @if (Auth::user()->role_id == 1)
-                {{-- <a class="nav-link {{ request()->is('admin/anggota*') ? 'active' : '' }}"
-                    href="{{ route('anggota.index') }}">
-                    <div class="nav-link-icon"><i data-feather="users"></i></div>
-                    Data User
-                </a> --}}
-                <a class="nav-link {{ request()->is('admin/user*') ? 'active' : '' }}"
-                    href="{{ route('user.index') }}">
-                    <div class="nav-link-icon"><i data-feather="users"></i></div>
-                    Data User
+            @if (Auth::user()->role_id == 3)
+                <a class="nav-link {{ request()->is('admin/schedules*') ? 'active' : '' }}"
+                    href="{{ route('schedules.index') }}">
+                    <div class="nav-link-icon"><i data-feather="folder"></i></div>
+                    Schedules
                 </a>
             @endif
 
-            @php
-                $roleID = [1, 2, 3, 4, 5];
-            @endphp
-            <a class="nav-link {{ request()->is('admin/news*') ? 'active' : '' }}"
-                href="{{ route('news.index') }}">
-                <div class="nav-link-icon"><i data-feather="folder"></i></div>
-                Artikel
-            </a>
+            @if (Auth::user()->role_id == 1)
+                <a class="nav-link {{ request()->is('admin/user*') ? 'active' : '' }}" href="{{ route('user.index') }}">
+                    <div class="nav-link-icon"><i data-feather="users"></i></div>
+                    Data User
+                </a>
+
+
+                <a class="nav-link {{ request()->is('admin/news*') ? 'active' : '' }}"
+                    href="{{ route('news.index') }}">
+                    <div class="nav-link-icon"><i data-feather="folder"></i></div>
+                    Artikel
+                </a>
+                <a class="nav-link {{ request()->is('admin/topics*') ? 'active' : '' }}"
+                    href="{{ route('topics.index') }}">
+                    <div class="nav-link-icon"><i data-feather="folder"></i></div>
+                    Topic
+                </a>
+            @endif
             <a class="nav-link {{ request()->is('admin/setting*') ? 'active' : '' }}"
                 href="{{ route('setting.index') }}">
                 <div class="nav-link-icon"><i data-feather="lock"></i></div>

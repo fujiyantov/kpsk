@@ -18,4 +18,19 @@ class Schedules extends Model
         'diagnosis',
         'status',
     ];
+
+    public function patient()
+    {
+        return $this->belongsTo(User::class, 'patient_id');
+    }
+
+    public function psikolog()
+    {
+        return $this->belongsTo(User::class, 'psikolog_id');
+    }
+
+    public function topic()
+    {
+        return $this->belongsTo(Topics::class, 'topic_id');
+    }
 }

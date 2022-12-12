@@ -28,7 +28,7 @@ class LoginController extends Controller
         if (Auth::guard('web')->attempt($credentials)) {
             $user = Auth::guard('web')->user();
             
-            if (in_array($user->role_id, [1, 2])) {
+            if (in_array($user->role_id, [1, 2, 3])) {
                 $request->session()->regenerate();
                 return redirect()->intended('admin/dashboard');    
 
