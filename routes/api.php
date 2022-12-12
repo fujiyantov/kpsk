@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\NewsController;
+use App\Http\Controllers\Api\TopicController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,5 +30,12 @@ Route::group([
     ], function () {
         Route::get('/', [NewsController::class, 'index']);
         Route::get('/{id}', [NewsController::class, 'show']);
+    });
+
+    Route::group([
+        'prefix' => 'topics'
+    ], function () {
+        Route::get('/', [TopicController::class, 'index']);
+        Route::get('/{id}', [TopicController::class, 'show']);
     });
 });
