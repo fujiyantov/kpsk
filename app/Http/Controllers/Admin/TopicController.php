@@ -21,7 +21,7 @@ class TopicController extends Controller
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
 
-                    $verifikasi = '
+                    $editBtn = '
                             <form action="' . route('topics.edit', [$item->id]) . '" method="GET">
                                     <button class="btn btn-warning text-black btn-xs">
                                         <i class="fa fa-pen"></i> &nbsp; Ubah 
@@ -29,9 +29,7 @@ class TopicController extends Controller
                                 </form>
                             ';
 
-
-
-                    $deleteBtn = '<form action="#" method="POST" onsubmit="return confirm(' . "'Anda akan menghapus item ini dari situs anda?'" . ')">
+                    $deleteBtn = '<form action="' . route('topics.destroy', [$item->id]) . '" method="POST" onsubmit="return confirm(' . "'Anda akan menghapus item ini?'" . ')">
                             ' . method_field('delete') . csrf_field() . '
                             <button class="btn btn-danger btn-xs">
                                 <i class="far fa-trash-alt"></i> &nbsp; Hapus
@@ -42,7 +40,7 @@ class TopicController extends Controller
                         $deleteBtn = '';
                     }
 
-                    return $verifikasi . '
+                    return $editBtn . '
                     ' . $deleteBtn . '
                     ';
                 })
@@ -130,5 +128,15 @@ class TopicController extends Controller
         return redirect()
             ->route('topics.index')
             ->with('success', 'Sukses! 1 Data Berhasil Diperbaharui');
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $resource = Topics::findOrFail($id);
+        $resource->delete();
+
+        return redirect()
+            ->route('topics.index')
+            ->with('success', 'Sukses! 1 Data Berhasil Dihapus');
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Topics
+    Topik
 @endsection
 
 @section('container')
@@ -13,7 +13,7 @@
                         <div class="col-auto mb-3">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="user"></i></div>
-                                Topics
+                                Topik
                             </h1>
                         </div>
                     </div>
@@ -25,6 +25,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card card-header-actions mb-4">
+                        <div class="card-header">
+                            Daftar Topik
+                        </div>
                         <div class="card-body">
                             <a class="btn btn-sm btn-primary mb-4" href="{{ route('topics.create') }}">
                                 Tambah Data

@@ -29,6 +29,9 @@
                             Daftar Artikel
                         </div>
                         <div class="card-body">
+                            <a class="btn btn-sm btn-primary mb-4" href="{{ route('news.create') }}">
+                                Tambah Data
+                            </a>
                             {{-- Alert --}}
                             @if (session()->has('success'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
