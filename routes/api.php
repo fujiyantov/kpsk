@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\TopicController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ConsultationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,13 +18,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+Route::post('register', [AuthController::class, 'register'])->name('auth.register');
+
+Route::group([
+    'prefix' => 'topics'
+], function () {
+    Route::get('/', [TopicController::class, 'index']);
+    Route::get('/{id}', [TopicController::class, 'show']);
+});
 
 Route::group([
     'middleware' => 'api',
 ], function () {
-    Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');;
-    Route::post('refresh', [AuthController::class, 'refresh'])->name('auth.refresh');;
-    Route::post('me', [AuthController::class, 'me'])->name('auth.me');;
+    Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::post('refresh', [AuthController::class, 'refresh'])->name('auth.refresh');
+    Route::post('me', [AuthController::class, 'me'])->name('auth.me');
 
     Route::group([
         'prefix' => 'news'
@@ -32,10 +41,5 @@ Route::group([
         Route::get('/{id}', [NewsController::class, 'show']);
     });
 
-    Route::group([
-        'prefix' => 'topics'
-    ], function () {
-        Route::get('/', [TopicController::class, 'index']);
-        Route::get('/{id}', [TopicController::class, 'show']);
-    });
+    Route::post('schedules', [ConsultationController::class, 'store']);
 });

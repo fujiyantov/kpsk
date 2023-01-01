@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -14,8 +19,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
-
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     /**
@@ -80,5 +84,35 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->guard('api')->factory()->getTTL() * 60
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required, email:unique, max:255',
+            'password' => 'required, min:3, string',
+            'name' => 'required, min:3, string',
+            'no_telp' => 'required, numeric',
+            'birthdate' => 'required, string',
+        ]);
+
+        $user = new User();
+        $user->email = $request->email;
+        $user->email_verified_at = Carbon::now()->format('Y-m-d');
+        $user->password = Hash::make($request->password);
+        $user->name = $request->name;
+        $user->full_name = $request->name;
+        $user->no_telp = $request->no_telp;
+        $user->bod = $request->bod;
+        $user->role_id = 4;
+        $user->save();
+
+        $credentials = request(['email', 'password']);
+
+        if (!$token = auth()->guard('api')->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($token);
     }
 }

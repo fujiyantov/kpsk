@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TopicResource extends JsonResource
@@ -37,11 +38,17 @@ class TopicResource extends JsonResource
                 $category = 'undifined';
                 break;
         }
+
+        $imageUrl = $this->image;
+        if (substr($this->image, 0, 5) != 'https') {
+            $imageUrl = Storage::url('/assets/images/' . $this->image);
+        }
+
         return [
             'id' => $this->id,
             'title' => $this->title,
             'category' => $category,
-            'image' => $this->image,
+            'image' => $imageUrl,
             'description' => $this->description,
             'created_at' => Carbon::parse($this->created_at)->toDateString()
         ];

@@ -14,6 +14,7 @@ class Schedules extends Model
         'psikolog_id',
         'topic_id',
         'date',
+        'time',
         'type',
         'diagnosis',
         'status',

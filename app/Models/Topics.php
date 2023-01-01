@@ -14,5 +14,6 @@ class Topics extends Model
         'category_id',
         'image',
         'description',
+        'psikolog_id',
     ];
 }
