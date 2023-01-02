@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Faculty;
 use App\Models\News;
 use App\Models\Schedules;
 use App\Models\Topics;

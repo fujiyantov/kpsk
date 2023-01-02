@@ -29,6 +29,9 @@ class User extends Authenticatable implements JWTSubject
         'bop',
         'bod',
         'role_id',
+        'nim',
+        'faculty_id',
+        'study_program_id',
     ];
 
     /**
@@ -68,5 +71,15 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class);
+    }
+
+    public function studyProgram()
+    {
+        return $this->belongsTo(StudyProgram::class);
     }
 }

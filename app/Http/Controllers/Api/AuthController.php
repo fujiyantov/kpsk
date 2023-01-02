@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -45,7 +46,26 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->guard('api')->user());
+        $user = auth()->guard('api')->user();
+        $resource = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'nim' => $user->nim,
+            'email' => $user->email,
+            'email_verified_at' => $user->email_verified_at,
+            'password' => $user->password,
+            'profile' => $user->profile,
+            'full_name' => $user->full_name,
+            'no_telp' => $user->no_telp,
+            'bop' => $user->bop,
+            'bod' => $user->bod,
+            'role_id' => $user->role_id,
+            'faculty_id' => isset($user->faculty) ? $user->faculty->id : NULL,
+            'faculty_name' => isset($user->faculty) ? $user->faculty->title : NULL,
+            'study_program_id' => isset($user->studyProgram) ? $user->studyProgram->id : NULL,
+            'study_program_name' => isset($user->studyProgram) ? $user->studyProgram->title : NULL,
+        ];
+        return response()->json($resource, Response::HTTP_OK);
     }
 
     /**
@@ -92,8 +112,11 @@ class AuthController extends Controller
             'email' => 'required, email:unique, max:255',
             'password' => 'required, min:3, string',
             'name' => 'required, min:3, string',
+            'nim' => 'string',
             'no_telp' => 'required, numeric',
             'birthdate' => 'required, string',
+            'faculty_id' => 'numeric|min:1',
+            'study_program_id' => 'numeric|min:1',
         ]);
 
         $user = new User();
@@ -101,10 +124,13 @@ class AuthController extends Controller
         $user->email_verified_at = Carbon::now()->format('Y-m-d');
         $user->password = Hash::make($request->password);
         $user->name = $request->name;
+        $user->nim = $request->nim;
         $user->full_name = $request->name;
         $user->no_telp = $request->no_telp;
         $user->bod = $request->bod;
         $user->role_id = 4;
+        $user->faculty_id = $request->faculty_id;
+        $user->study_program_id = $request->study_program_id;
         $user->save();
 
         $credentials = request(['email', 'password']);
