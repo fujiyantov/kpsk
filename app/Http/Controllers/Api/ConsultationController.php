@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ScheduleCollection;
 use App\Models\Schedules;
 use App\Models\Topics;
 use Carbon\Carbon;
@@ -18,6 +19,23 @@ class ConsultationController extends Controller
 {
     private const OFFLINE = 0;
     private const ONLINE = 1;
+
+    public function index(Request $request)
+    {
+        $type = $request->get('type');
+        $status = $request->get('status');
+
+        $collections = Schedules::when(isset($type), function ($query) use ($type) {
+            $query->where('type', $type);
+        })
+            ->when(isset($status), function ($query) use ($status) {
+                $query->where('status', $status);
+            })
+            ->get();
+
+        return response(new ScheduleCollection($collections), Response::HTTP_OK);
+    }
+
     /**
      * Store newly a resource
      *
@@ -33,7 +51,7 @@ class ConsultationController extends Controller
                 // 'time' => 'required|string',
                 'type' => 'required|numeric|min:0|max:1',
             ]);
-            
+
             $topic = Topics::where('id', $request->input('topic_id'))->firstOrFail();
 
             $date = $request->input('date');

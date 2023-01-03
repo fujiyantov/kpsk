@@ -45,5 +45,6 @@ Route::group([
         Route::get('/{id}', [NewsController::class, 'show']);
     });
 
+    Route::get('/schedules', [ConsultationController::class, 'index']);
     Route::post('/schedules', [ConsultationController::class, 'store']);
 });
