@@ -15,6 +15,12 @@ class ScheduleResource extends JsonResource
      */
     public function toArray($request)
     {
+
+        $imageUrl = $this->topic->image;
+        if (substr($this->topic->image, 0, 5) != 'https') {
+            $imageUrl = Storage::url('/assets/images/' . $this->topic->image);
+        }
+
         return [
             'id' => $this->id,
             'patient_id' => $this->patient->id,
@@ -22,7 +28,8 @@ class ScheduleResource extends JsonResource
             'psikolog_id' => $this->psikolog->id,
             'psikolog_name' => $this->psikolog->name,
             'topic_id' => $this->topic->id,
-            'topic_name' => $this->topic->name,
+            'topic_name' => $this->topic->title,
+            'topic_image' => $imageUrl,
             'date' => $this->date,
             'time' => $this->time,
             'type' => $this->type,
