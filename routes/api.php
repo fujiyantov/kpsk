@@ -34,6 +34,9 @@ Route::group([
 Route::group([
     'middleware' => 'api',
 ], function () {
+    Route::get('/histories', [ConsultationController::class, 'index']);
+    Route::post('/schedules', [ConsultationController::class, 'store']);
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::post('/refresh', [AuthController::class, 'refresh'])->name('auth.refresh');
     Route::post('/me', [AuthController::class, 'me'])->name('auth.me');
@@ -44,7 +47,4 @@ Route::group([
         Route::get('/', [NewsController::class, 'index']);
         Route::get('/{id}', [NewsController::class, 'show']);
     });
-
-    Route::get('/schedules', [ConsultationController::class, 'index']);
-    Route::post('/schedules', [ConsultationController::class, 'store']);
 });
