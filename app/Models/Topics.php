@@ -16,4 +16,9 @@ class Topics extends Model
         'description',
         'psikolog_id',
     ];
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedules::class, 'topic_id');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Faculty;
 use App\Models\StudyProgram;
+use App\Models\Topics;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,6 +35,23 @@ class DataMasterController extends Controller
 
         return response()->json([
             'data' => $collections
+        ], Response::HTTP_OK);
+    }
+
+    public function getSummeryTopic(Request $request)
+    {
+        $collections = Topics::all();
+
+        $datas = [];
+        foreach ($collections as $collection) {
+            $datas[] = [
+                'topic' => $collection->title,
+                'total' => $collection->schedules->count(),
+            ];
+        }
+
+        return response()->json([
+            'data' => $datas
         ], Response::HTTP_OK);
     }
 }

@@ -23,6 +23,7 @@ Route::post('register', [AuthController::class, 'register'])->name('auth.registe
 Route::get('/faculties', [DataMasterController::class, 'getAllFaculty']);
 Route::get('/faculties/{faculty_id}/study-programs', [DataMasterController::class, 'getStudyProgramByFaculty']);
 Route::get('/study-programs', [DataMasterController::class, 'getAllStudyProgram']);
+Route::get('/topic-summary', [DataMasterController::class, 'getSummeryTopic']);
 
 Route::group([
     'prefix' => 'topics'
