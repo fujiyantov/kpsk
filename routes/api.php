@@ -18,6 +18,10 @@ use App\Http\Controllers\Api\DataMasterController;
 |
 */
 
+if (env('APP_ENV') === 'production') {
+    URL::forceScheme('https');
+}
+
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
 Route::post('register', [AuthController::class, 'register'])->name('auth.register');
 Route::get('/faculties', [DataMasterController::class, 'getAllFaculty']);
