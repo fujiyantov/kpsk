@@ -28,8 +28,10 @@
                     href="{{ route('setting.index') }}">Profil</a>
                 <a class="nav-link {{ request()->is('admin/setting/password') ? 'active ms-0' : '' }}"
                     href="{{ route('change-password') }}">Ubah Password</a>
-                <a class="nav-link {{ request()->is('admin/setting/schedules') ? 'active ms-0' : '' }}"
-                    href="{{ route('schedules-set') }}">Ubah Jadwal Konsultasi</a>
+                @if (Auth::user()->role_id == 3)
+                    <a class="nav-link {{ request()->is('admin/setting/schedules') ? 'active ms-0' : '' }}"
+                        href="{{ route('schedules-set') }}">Ubah Jadwal Konsultasi</a>
+                @endif
             </nav>
             <hr class="mt-0 mb-4" />
             <div class="row">
@@ -76,7 +78,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-outline timepicker">
-                                        <input type="time" name="time" class="form-control" id="form1" value="12:00">
+                                        <input type="time" name="time" class="form-control" id="form1"
+                                            value="12:00">
                                     </div>
                                 </div>
                                 <button class="btn btn-success" type="submit">Perbarui Jadwal &nbsp; <div

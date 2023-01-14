@@ -53,34 +53,42 @@ class AuthController extends Controller
         switch ($user->day) {
             case 0:
                 $nameOfDay = 'sunday';
+                $labelOfDay = 'Minggu';
                 break;
 
             case 1:
                 $nameOfDay = 'monday';
+                $labelOfDay = 'Senin';
                 break;
 
             case 2:
                 $nameOfDay = 'tuesday';
+                $labelOfDay = 'Selasa';
                 break;
 
             case 3:
                 $nameOfDay = 'wednesday';
+                $labelOfDay = 'Rabu';
                 break;
 
             case 4:
                 $nameOfDay = 'thursday';
+                $labelOfDay = 'Kamis';
                 break;
 
             case 5:
                 $nameOfDay = 'friday';
+                $labelOfDay = 'Jumat';
                 break;
 
             case 6:
                 $nameOfDay = 'saturday';
+                $labelOfDay = 'Sabtu';
                 break;
 
             default:
                 $nameOfDay = 'monday';
+                $labelOfDay = 'Senin';
                 break;
         }
 
@@ -127,6 +135,8 @@ class AuthController extends Controller
             'day' => $user->day,
             'time' => $user->time,
             'schedule' => $scheduleDate,
+            'dayName' => $labelOfDay,
+            
         ];
         return response()->json($resource, Response::HTTP_OK);
     }

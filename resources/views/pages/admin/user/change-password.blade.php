@@ -24,14 +24,19 @@
         <div class="container-xl px-4 mt-4">
             <!-- Account page navigation-->
             <nav class="nav nav-borders">
-                <a class="nav-link {{ (request()->is('admin/setting')) ? 'active ms-0' : '' }}" href="{{ route('setting.index') }}">Profil</a>
-                <a class="nav-link {{ (request()->is('admin/setting/password')) ? 'active ms-0' : '' }}" href="{{ route('change-password') }}">Ubah Password</a>
-                <a class="nav-link {{ (request()->is('admin/setting/schedules')) ? 'active ms-0' : '' }}" href="{{ route('schedules-set') }}">Ubah Jadwal Konsultasi</a>
+                <a class="nav-link {{ request()->is('admin/setting') ? 'active ms-0' : '' }}"
+                    href="{{ route('setting.index') }}">Profil</a>
+                <a class="nav-link {{ request()->is('admin/setting/password') ? 'active ms-0' : '' }}"
+                    href="{{ route('change-password') }}">Ubah Password</a>
+                @if (Auth::user()->role_id == 3)
+                    <a class="nav-link {{ request()->is('admin/setting/schedules') ? 'active ms-0' : '' }}"
+                        href="{{ route('schedules-set') }}">Ubah Jadwal Konsultasi</a>
+                @endif
             </nav>
             <hr class="mt-0 mb-4" />
             <div class="row">
                 <div class="col-lg-8">
-                     @if ($errors->any())
+                    @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -52,7 +57,8 @@
                             @if (session()->has('success'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ session('success') }}
-                                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    <button class="btn-close" type="button" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
                                 </div>
                             @endif
                             <form action="{{ route('update.password') }}" method="POST">
@@ -60,34 +66,38 @@
                                 <!-- Form Group (current password)-->
                                 <div class="mb-3">
                                     <label class="small mb-1" for="current_password">Password Lama</label>
-                                    <input class="form-control @error('current_password') is-invalid @enderror" name="current_password" type="password"  required/>
+                                    <input class="form-control @error('current_password') is-invalid @enderror"
+                                        name="current_password" type="password" required />
                                     @error('current_password')
                                         <div class="invalid-feedback">
-                                            {{ $message; }}
+                                            {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <!-- Form Group (new password)-->
                                 <div class="mb-3">
                                     <label class="small mb-1" for="new_password">Password Baru</label>
-                                    <input class="form-control @error('new_password') is-invalid @enderror" name="new_password" type="password" required/>
+                                    <input class="form-control @error('new_password') is-invalid @enderror"
+                                        name="new_password" type="password" required />
                                     @error('new_password')
                                         <div class="invalid-feedback">
-                                            {{ $message; }}
+                                            {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <!-- Form Group (confirm password)-->
                                 <div class="mb-3">
                                     <label class="small mb-1" for="new_confirm_password">Konfirmasi Password</label>
-                                    <input class="form-control @error('new_confirm_password') is-invalid @enderror" name="new_confirm_password" type="password" required/>
+                                    <input class="form-control @error('new_confirm_password') is-invalid @enderror"
+                                        name="new_confirm_password" type="password" required />
                                     @error('new_confirm_password')
                                         <div class="invalid-feedback">
-                                            {{ $message; }}
+                                            {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
-                                <button class="btn btn-success" type="submit">Perbarui Password &nbsp; <div class="nav-link-icon"><i data-feather="check-circle"></i></button>
+                                <button class="btn btn-success" type="submit">Perbarui Password &nbsp; <div
+                                        class="nav-link-icon"><i data-feather="check-circle"></i></button>
                             </form>
                         </div>
                     </div>
@@ -96,6 +106,3 @@
         </div>
     </main>
 @endsection
-
-
-

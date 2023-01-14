@@ -120,6 +120,10 @@ class ScheduleController extends Controller
     public function show(Request $request, $id)
     {
         $item = Schedules::findOrFail($id);
+        if ($request->get('is_read') == true) {
+            $item->is_read = 1;
+            $item->save();
+        }
         return view('pages.admin.schedules.show', compact('item'));
     }
 
