@@ -6,22 +6,31 @@
 
 @section('container')
     <main>
-        <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <header class="page-header page-header-dark bg-success pb-10">
             <div class="container-xl px-4">
-                <div class="page-header-content">
-                    <div class="row align-items-center justify-content-between pt-3">
-                        <div class="col-auto mb-3">
+                <div class="page-header-content pt-4">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-auto mt-4">
                             <h1 class="page-header-title">
-                                <div class="page-header-icon"><i data-feather="user"></i></div>
+                                <div class="page-header-icon">
+                                    <i data-feather="folder"></i>
+                                </div>
                                 Topik
                             </h1>
+                            <div class="page-header-subtitle">Daftar Topik</div>
                         </div>
                     </div>
+                    <nav class="mt-4 rounded" aria-label="breadcrumb">
+                        <ol class="breadcrumb px-3 py-2 rounded mb-0">
+                            <li class="breadcrumb-item"><a href="{{ route('admin-dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Topik</li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </header>
         <!-- Main page content-->
-        <div class="container-xl px-4 mt-4">
+        <div class="container-xl px-4 mt-n10">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card card-header-actions mb-4">
@@ -29,7 +38,7 @@
                             Daftar Topik
                         </div>
                         <div class="card-body">
-                            <a class="btn btn-sm btn-primary mb-4" href="{{ route('topics.create') }}">
+                            <a class="btn btn-sm btn-success mb-4" href="{{ route('topics.create') }}">
                                 Tambah Data
                             </a>
                             {{-- Alert --}}
@@ -56,9 +65,10 @@
                                 <thead>
                                     <tr>
                                         <th width="10">No.</th>
-                                        <th>Image</th>
-                                        <th>Title</th>
-                                        <th>Aksi</th>
+                                        <th>Gambar</th>
+                                        <th style="vertical-align:middle">Judul</th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -87,7 +97,8 @@
                 },
                 {
                     data: 'image',
-                    name: 'image'
+                    name: 'image',
+                    width: '8%'
                 },
                 {
                     data: 'title',
@@ -98,7 +109,14 @@
                     name: 'action',
                     orderable: false,
                     searcable: false,
-                    width: '10%'
+                    width: '8%'
+                },
+                {
+                    data: 'action_del',
+                    name: 'action_del',
+                    orderable: false,
+                    searcable: false,
+                    width: '8%'
                 },
             ]
         });

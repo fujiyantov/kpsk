@@ -6,28 +6,32 @@
 
 @section('container')
     <main>
-        <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <header class="page-header page-header-dark bg-success pb-10">
             <div class="container-xl px-4">
-                <div class="page-header-content">
-                    <div class="row align-items-center justify-content-between pt-3">
-                        <div class="col-auto mb-3">
+                <div class="page-header-content pt-4">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-auto mt-4">
                             <h1 class="page-header-title">
-                                <div class="page-header-icon"><i data-feather="user-plus"></i></div>
-                                Edit Data
+                                <div class="page-header-icon">
+                                    <i data-feather="file-text"></i>
+                                </div>
+                                Topik
                             </h1>
-                        </div>
-                        <div class="col-12 col-xl-auto mb-3">
-                            <a class="btn btn-sm btn-light text-primary" href="{{ route('topics.index') }}">
-                                <i class="me-1" data-feather="arrow-left"></i>
-                                Kembali
-                            </a>
+                            <div class="page-header-subtitle">Edit Topik</div>
                         </div>
                     </div>
+                    <nav class="mt-4 rounded" aria-label="breadcrumb">
+                        <ol class="breadcrumb px-3 py-2 rounded mb-0">
+                            <li class="breadcrumb-item"><a href="{{ route('admin-dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('topics.index') }}">Topik</a></li>
+                            <li class="breadcrumb-item active">Edit</li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </header>
         <!-- Main page content-->
-        <div class="container-xl px-4 mt-4">
+        <div class="container-xl px-4 mt-n10">
             <div class="row">
                 <div class="col-xl-12">
                     <!-- Account details card-->
@@ -53,8 +57,8 @@
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
                                     <!-- Form Group (first name)-->
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="name">Nama</label>
+                                    <div class="col-md-12">
+                                        <label class="small mb-2" style="font-weight: 600" for="name">Judul</label>
                                         <input class="form-control @error('name') is-invalid @enderror" name="title"
                                             type="text" value="{{ $resource->title }}" required autofocus />
                                         @error('name')
@@ -65,10 +69,10 @@
                                     </div>
                                 </div>
 
-                                <div class="row gx-3 mb-3">
+                                {{-- <div class="row gx-3 mb-3">
                                     <!-- Form Group (Category)-->
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="category_id">Kategori</label>
+                                    <div class="col-md-12">
+                                        <label class="small mb-2" style="font-weight: 600" for="category_id">Kategori</label>
                                         <select class="form-select @error('category_id') is-invalid @enderror"
                                             name="category_id">
                                             <option value="1" @if ($resource->category_id == 1) selected @endif>
@@ -86,13 +90,13 @@
                                             </div>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="row gx-3 mb-3">
                                     <!-- Form Group (description)-->
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="description">Keterangan</label>
-                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="10">{{ $resource->description }}</textarea>
+                                    <div class="col-md-12">
+                                        <label class="small mb-2" style="font-weight: 600" for="description">Keterangan</label>
+                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="25">{{ $resource->description }}</textarea>
                                         @error('description')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -104,19 +108,19 @@
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-12">
                                         @if (substr($resource->image, 0, 5) == 'https')
-                                            <img src="{{ $resource->image }}" class="img-thumbnail" width="250"
+                                            <img src="{{ $resource->image }}" class="img-thumbnail" width="500"
                                                 alt="image_village">
                                         @else
                                             <img src="{{ Storage::url('/assets/images/' . $resource->image) }}"
-                                                class="img-thumbnail" width="250" alt="image_village">
+                                                class="img-thumbnail" width="500" alt="image_village">
                                         @endif
                                     </div>
                                 </div>
 
                                 <div class="row gx-3 mb-3">
                                     <!-- Form Group (Image)-->
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="image">Banner</label>
+                                    <div class="col-md-12">
+                                        <label class="small mb-2" style="font-weight: 600" for="image">Gambar</label>
                                         <input class="form-control @error('image') is-invalid @enderror" name="image"
                                             type="file" value="{{ old('image') }}"/>
                                         @error('image')
@@ -127,8 +131,8 @@
                                     </div>
                                 </div>
                                 <!-- Submit button-->
-                                <button class="btn btn-primary" type="submit">
-                                    Tambah
+                                <button class="btn btn-success" type="submit" style="float: right">
+                                    Simpan &nbsp; <div class="nav-link-icon"><i data-feather="check-circle"></i></div>
                                 </button>
                             </form>
                         </div>

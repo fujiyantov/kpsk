@@ -22,58 +22,71 @@ class UserController extends Controller
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
                     return '
-                        <a class="btn btn-primary btn-xs" data-bs-toggle="modal" data-bs-target="#updateModal' . $item->id . '">
+                        <a class="btn btn-outline-success p-2 btn-xs" data-bs-toggle="modal" data-bs-target="#updateModal' . $item->id . '">
                             <i class="fas fa-edit"></i> &nbsp; Edit
                         </a>
+                    ';
+                })
+                ->addColumn('action_del', function ($item) {
+                    return '
                         <form action="' . route('user.destroy', $item->id) . '" method="POST" onsubmit="return confirm(' . "'Anda akan menghapus item ini secara permanen dari situs anda?'" . ')">
                             ' . method_field('delete') . csrf_field() . '
-                            <button class="btn btn-danger btn-xs">
+                            <button class="btn btn-danger p-2 btn-xs">
                                 <i class="far fa-trash-alt"></i> &nbsp; Hapus
                             </button>
                         </form>
                     ';
                 })
                 ->editColumn('name', function ($item) {
-                    return $item->profile ?
-                        '<div class="d-flex align-items-center">
-                                    <div class="avatar me-2"><img class="avatar-img img-fluid" src="' . Storage::url($item->profile) . '" /></div>' .
-                        $item->name . '
-                                </div>'
-                        : '<div class="d-flex align-items-center">
-                                    <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://ui-avatars.com/api/?name=' . $item->name . '" /></div>' .
-                        $item->name . '
-                                </div>';
+
+                    $potoUrl = 'https://ui-avatars.com/api/?name=' . $item->name;
+                    if ($item->profile != NULL) {
+                        if (substr($item->profile, 0, 5) == 'https') {
+                            $potoUrl = $item->profile;
+                        } else {
+                            Storage::url($item->profile);
+                        }
+                    }
+
+                    return '<div class="d-flex align-items-center">
+                                <div class="avatar me-2"><img class="avatar-img img-fluid" src="' . $potoUrl . '" /></div>' . $item->name . '
+                            </div>';
                 })
-                ->editColumn('position', function ($item) {
+                ->addColumn('position', function ($item) {
                     switch ($item->role_id) {
                         case '2':
-                            $strname = 'Dekan';
+                            $strname = 'Warek III';
+                            $bg = 'bg-warning';
                             break;
 
                         case '3':
                             $strname = 'Psiklog';
+                            $bg = 'bg-warning';
                             break;
 
                         case '4':
                             $strname = 'User';
+                            $bg = 'bg-light';
                             break;
 
                         default:
-                            $strname = 'Dekan';
+                            $strname = 'Warek III';
+                            $bg = 'bg-light';
                             break;
                     }
-                    return $strname;
+
+                    return '<span class="badge ' . $bg . ' text-dark text-bold"">' . $strname . '</span>';
                 })
                 ->addIndexColumn()
                 ->removeColumn('id')
-                ->rawColumns(['action', 'name'])
+                ->rawColumns(['action', 'name', 'action_del', 'position'])
                 ->make();
         }
 
         $positions = collect([
             [
                 'id' => 2,
-                'name' => 'dekan',
+                'name' => 'warek iii',
             ],
             [
                 'id' => 3,
@@ -135,7 +148,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $item = User::findOrFail($id);
-
+        
         return view('pages.admin.user.edit', [
             'item' => $item
         ]);

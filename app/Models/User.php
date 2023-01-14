@@ -75,11 +75,11 @@ class User extends Authenticatable implements JWTSubject
 
     public function faculty()
     {
-        return $this->belongsTo(Faculty::class);
+        return $this->belongsTo(Faculty::class, 'faculty_id', 'id');
     }
 
     public function studyProgram()
     {
-        return $this->belongsTo(StudyProgram::class);
+        return $this->belongsTo(StudyProgram::class, 'study_program_id', 'id');
     }
 }

@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title') - App Developer</title>
+    <title>@yield('title') &middot; Konslutasi Pisokolog IMM</title>
     @stack('prepend-style')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -46,7 +46,8 @@
                 padding: 25px;
             }
         }
-/* 
+
+        /*
         .timeline h1 {
             font-weight: 300;
             font-size: 1.4em;
@@ -138,6 +139,51 @@
             left: 0;
             right: -55.8px;
         }
+
+        .sidenav-light .sidenav-menu .nav-link.active {
+            color: #00ac69 !important
+        }
+
+        .sidenav-light .sidenav-menu .nav-link:hover {
+            color: #00ac69 !important
+        }
+
+        .sidenav-light .sidenav-menu .nav-link.active .nav-link-icon {
+            color: #00ac69 !important
+        }
+
+        /* a {
+            color: #00ac69!important
+        } */
+
+        .nav-borders .nav-link.active {
+            color: #00ac69 !important;
+            border-bottom-color: #00ac69 !important
+        }
+
+        .card:not([class*=bg-]) .card-header {
+            color: #00ac69 !important
+        }
+
+        table.dataTable td,
+        table.dataTable th {
+            vertical-align: middle !important;
+        }
+
+        .page-link,
+        .dataTable-pagination a {
+            color: #00ac69 !important
+        }
+
+        .page-item.active .page-link,
+        .page-item.active .dataTable-pagination a,
+        .dataTable-pagination .page-item.active a,
+        .dataTable-pagination li.active .page-link,
+        .dataTable-pagination li.active a {
+            background-color: #00ac69 !important;
+            border-color: #00ac69 !important;
+            color: #fff !important;
+        }
     </style>
 </head>
 
@@ -161,6 +207,7 @@
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="{{ url('/admin/js/litepicker.js') }}"></script>
     @stack('addon-script')
+    @yield('script')
 </body>
 
 </html>

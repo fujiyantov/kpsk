@@ -16,7 +16,7 @@ class SettingController extends Controller
     public function index()
     {
         $user = Auth::user();
-
+        
         return view('pages.admin.user.profile',[
             'user' => $user
         ]);
@@ -92,8 +92,6 @@ class SettingController extends Controller
 
         $id = $request->id;
         $item = User::findOrFail($id);
-
-        //dd($item);
 
         if($request->file('profile')){
             Storage::delete($item->profile);

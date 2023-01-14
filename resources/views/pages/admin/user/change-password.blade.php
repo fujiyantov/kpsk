@@ -86,7 +86,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <button class="btn btn-primary" type="submit">Perbarui Password</button>
+                                <button class="btn btn-success" type="submit">Perbarui Password &nbsp; <div class="nav-link-icon"><i data-feather="check-circle"></i></button>
                             </form>
                         </div>
                     </div>

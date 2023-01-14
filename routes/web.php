@@ -38,6 +38,7 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin-dashboard');
 
+        Route::post('/schedule-reviews/{schedule_id}', [ScheduleController::class, 'review'])->name('schedules.review');
         Route::resource('/schedules', ScheduleController::class);
         Route::resource('/news', NewsController::class);
         Route::resource('/topics', TopicController::class);

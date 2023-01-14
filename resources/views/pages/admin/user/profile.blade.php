@@ -50,7 +50,11 @@
                         <div class="card-body text-center">
                             <!-- Profile picture image-->
                             @if ($user->profile != NULL)
-                                <img class="img-account-profile rounded-circle mb-2" src="{{ Storage::url($user->profile) }}" alt="" />
+                                @if (substr($user->profile, 0, 5) == 'https')
+                                    <img class="img-account-profile rounded-circle mb-2" src="{{ $user->profile }}" alt="" />
+                                @else
+                                    <img class="img-account-profile rounded-circle mb-2" src="{{ Storage::url($user->profile) }}" alt="" />
+                                @endif
                             @else
                                 <img class="img-account-profile rounded-circle mb-2" src="https://ui-avatars.com/api/?name={{ $user->name }}" alt="" />
                             @endif
@@ -67,7 +71,7 @@
                                   style="display: none;"
                                   onchange="form.submit()"
                                 />    
-                                <button class="btn btn-primary" type="button" onclick="thisFileUpload();">Unggah Photo</button>
+                                <button class="btn btn-success" type="button" onclick="thisFileUpload();">Unggah Photo &nbsp; <div class="nav-link-icon"><i data-feather="upload-cloud"></i></button>
                             </form>
                         </div>
                     </div>
@@ -98,7 +102,7 @@
                                     <input class="form-control" name="email" type="email" placeholder="name@example.com" value="{{ $user->email }}" required/>
                                 </div>
                                 <!-- Save changes button-->
-                                <button class="btn btn-primary" type="submit">Perbarui Profil</button>
+                                <button class="btn btn-success" type="submit">Perbarui Profil &nbsp; <div class="nav-link-icon"><i data-feather="check-circle"></i></button>
                             </form>
                         </div>
                     </div>

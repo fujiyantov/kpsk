@@ -86,7 +86,7 @@
                                     </div>   
                                 </div>
                                 <!-- Submit button-->
-                                <button class="btn btn-primary" type="submit">
+                                <button class="btn btn-success" type="submit">
                                     Perbarui Profil
                                 </button>
                             </form>

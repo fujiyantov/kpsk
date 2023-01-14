@@ -9,6 +9,12 @@ class Schedules extends Model
 {
     use HasFactory;
 
+    public const PENDING = 1;
+    public const ACCEPT = 2;
+    public const REJECT = 3;
+    public const FINISH = 4;
+    public const EXPIRED = 5;
+
     protected $fillable = [
         'patient_id',
         'psikolog_id',

@@ -20,29 +20,21 @@ class NewsController extends Controller
 
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
-
-                    $editBtn = '
+                    return '
                             <form action="' . route('news.edit', [$item->id]) . '" method="GET">
-                                    <button class="btn btn-warning text-black btn-xs">
-                                        <i class="fa fa-pen"></i> &nbsp; Ubah 
+                                    <button class="btn btn-outline-success p-2 btn-xs">
+                                        <i class="fas fa-edit"></i> &nbsp; Edit
                                     </button>
                                 </form>
                             ';
-
-                    $deleteBtn = '<form action="' . route('news.destroy', [$item->id]) . '" method="POST" onsubmit="return confirm(' . "'Anda akan menghapus item ini?'" . ')">
+                })
+                ->addColumn('action_del', function ($item) {
+                    return  '<form action="' . route('news.destroy', [$item->id]) . '" method="POST" onsubmit="return confirm(' . "'Anda akan menghapus item ini?'" . ')">
                             ' . method_field('delete') . csrf_field() . '
-                            <button class="btn btn-danger btn-xs">
+                            <button class="btn btn-danger p-2 btn-xs">
                                 <i class="far fa-trash-alt"></i> &nbsp; Hapus
                             </button>
                         </form>';
-
-                    if ($item->status == 1) {
-                        $deleteBtn = '';
-                    }
-
-                    return $editBtn . '
-                    ' . $deleteBtn . '
-                    ';
                 })
                 ->addColumn('image', function ($item) {
 
@@ -51,12 +43,12 @@ class NewsController extends Controller
                         $imageLink = $item->image;
                     }
                     return '<div class="d-flex align-items-center">
-                                <img class="img img-thumbnail img-fluid" width="75" src="' . $imageLink . '" />
+                                <img class="img img-fluid" width="150" src="' . $imageLink . '" />
                             </div>';
                 })
                 ->addIndexColumn()
                 ->removeColumn('id')
-                ->rawColumns(['action', 'image'])
+                ->rawColumns(['action', 'image', 'action_del'])
                 ->make();
         }
 

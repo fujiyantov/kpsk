@@ -6,7 +6,7 @@
 
 @section('container')
     <main>
-        <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+        <header class="page-header page-header-dark bg-success pb-10">
             <div class="container-xl px-4">
                 <div class="page-header-content pt-4">
                     <div class="row align-items-center justify-content-between">
@@ -17,7 +17,7 @@
                                 </div>
                                 Pengguna
                             </h1>
-                            <div class="page-header-subtitle">List Pengguna</div>
+                            <div class="page-header-subtitle">Daftar Pengguna</div>
                         </div>
                     </div>
                     <nav class="mt-4 rounded" aria-label="breadcrumb">
@@ -35,7 +35,7 @@
                 <div class="col-lg-12">
                     <div class="card card-header-actions mb-4">
                         <div class="card-header">
-                            <a class="btn btn-sm btn-primary" href="{{ route('user.create') }}" data-bs-toggle="modal"
+                            <a class="btn btn-sm btn-success" href="{{ route('user.create') }}" data-bs-toggle="modal"
                             data-bs-target="#createModal">
                                 Tambah Pengguna Baru
                             </a>
@@ -66,7 +66,8 @@
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>Jabatan</th>
-                                        <th>Aksi</th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -122,7 +123,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit"><i data-feather="check"></i> &nbsp;
+                        <button class="btn btn-success" type="submit"><i data-feather="check"></i> &nbsp;
                             Simpan</button>
                     </div>
                 </form>
@@ -175,7 +176,7 @@
                                     <select name="position_id" class="form-control">
                                         @foreach ($positions as $val)
                                             <option value="{{ $val['id'] }}"
-                                                @if ($val['id'] == $position_id) selected @endif>{{ $val['name'] }}
+                                                @if ($val['id'] == $position_id) selected @endif>{{ ucwords($val['name']) }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -183,7 +184,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary" type="submit">Ubah</button>
+                            <button class="btn btn-success" type="submit">Ubah</button>
                         </div>
                     </form>
                 </div>
@@ -205,17 +206,25 @@
           {
             "data": 'DT_RowIndex',
             orderable: false, 
-            searchable: false
+            searchable: false,
+            width: '3%'
           },
-          { data: 'name', name: 'name' },
-          { data: 'email', name: 'email' },
-          { data: 'position', name: 'position' },
+          { data: 'name', name: 'name', width: '10%' },
+          { data: 'email', name: 'email', width: '10%'},
+          { data: 'position', name: 'position', width: '10%'},
           { 
             data: 'action', 
             name: 'action',
             orderable: false,
             searcable: false,
-            width: '15%'
+            width: '2%'
+          },
+          { 
+            data: 'action_del', 
+            name: 'action_del',
+            orderable: false,
+            searcable: false,
+            width: '2%'
           },
         ]
     });

@@ -69,7 +69,7 @@ class ConsultationController extends Controller
             $resource->date = $date;
             $resource->time = $time;
             $resource->type = $request->input('type');
-            $resource->status = 0;
+            $resource->status = 1;
             $resource->save();
 
             return response()->json(['message' => 'schedule has been created'], Response::HTTP_CREATED);
