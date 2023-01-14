@@ -16,8 +16,8 @@ class SettingController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
-        return view('pages.admin.user.profile',[
+
+        return view('pages.admin.user.profile', [
             'user' => $user
         ]);
     }
@@ -93,7 +93,7 @@ class SettingController extends Controller
         $id = $request->id;
         $item = User::findOrFail($id);
 
-        if($request->file('profile')){
+        if ($request->file('profile')) {
             Storage::delete($item->profile);
             $item->profile = $request->file('profile')->store('assets/profile-images');
         }
@@ -101,8 +101,8 @@ class SettingController extends Controller
         $item->save();
 
         return redirect()
-                ->route('user.index')
-                ->with('success', 'Sukses! Photo Pengguna telah diperbarui');
+            ->route('user.index')
+            ->with('success', 'Sukses! Photo Pengguna telah diperbarui');
     }
 
     public function change_password()
@@ -114,14 +114,40 @@ class SettingController extends Controller
     {
         $request->validate([
             'current_password' => ['required', new MatchOldPassword],
-            'new_password' => ['min:5','max:255'],
+            'new_password' => ['min:5', 'max:255'],
             'new_confirm_password' => ['same:new_password'],
         ]);
-   
-        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-   
+
+        User::find(auth()->user()->id)->update(['password' => Hash::make($request->new_password)]);
+
         return redirect()
-                ->route('change-password')
-                ->with('success', 'Sukses! Password telah diperbarui');
+            ->route('change-password')
+            ->with('success', 'Sukses! Password telah diperbarui');
+    }
+
+    public function schedules()
+    {
+        return view('pages.admin.user.set-schedule');
+    }
+
+    public function updateSchedule(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            if ($user->role_id != 3) {
+                throw new \Exception('invalid user', 422);
+            }
+
+            $user->day = $request->day;
+            $user->time = $request->time;
+            $user->save();
+
+
+            return redirect()
+                ->route('schedules-set')
+                ->with('success', 'Sukses! Jadwal telah diperbarui');
+        } catch (\Exception $th) {
+            throw $th;
+        }
     }
 }

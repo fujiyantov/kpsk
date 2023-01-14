@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use Carbon\Carbon;
 use App\Models\User;
+use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Psy\Util\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -47,6 +49,64 @@ class AuthController extends Controller
     public function me()
     {
         $user = auth()->guard('api')->user();
+
+        switch ($user->day) {
+            case 0:
+                $nameOfDay = 'sunday';
+                break;
+
+            case 1:
+                $nameOfDay = 'monday';
+                break;
+
+            case 2:
+                $nameOfDay = 'tuesday';
+                break;
+
+            case 3:
+                $nameOfDay = 'wednesday';
+                break;
+
+            case 4:
+                $nameOfDay = 'thursday';
+                break;
+
+            case 5:
+                $nameOfDay = 'friday';
+                break;
+
+            case 6:
+                $nameOfDay = 'saturday';
+                break;
+
+            default:
+                $nameOfDay = 'monday';
+                break;
+        }
+
+        $days = $this->getRequestDay(strtolower($nameOfDay));
+        $collections = [];
+        foreach ($days as $day) {
+            $collections[] =  Carbon::parse($day)->toDateString();
+        }
+
+        $scheduleDate = '';
+        $now = date('Y-m-d');
+        $x = false;
+        foreach ($collections as $item) {
+            if ($x == false) {
+                if ($now == $item) {
+                    $scheduleDate = $item;
+                    $x = true;
+                }
+
+                if ($item > $now) {
+                    $scheduleDate = $item;
+                    $x = true;
+                }
+            }
+        }
+
         $resource = [
             'id' => $user->id,
             'name' => $user->name,
@@ -64,8 +124,20 @@ class AuthController extends Controller
             'faculty_name' => isset($user->faculty) ? $user->faculty->title : NULL,
             'study_program_id' => isset($user->studyProgram) ? $user->studyProgram->id : NULL,
             'study_program_name' => isset($user->studyProgram) ? $user->studyProgram->title : NULL,
+            'day' => $user->day,
+            'time' => $user->time,
+            'schedule' => $scheduleDate,
         ];
         return response()->json($resource, Response::HTTP_OK);
+    }
+
+    private function getRequestDay($day)
+    {
+        return new \DatePeriod(
+            Carbon::parse("first " . $day . " of this month"),
+            CarbonInterval::week(),
+            Carbon::parse("first " . $day . " of next month")
+        );
     }
 
     /**

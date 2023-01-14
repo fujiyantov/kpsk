@@ -32,6 +32,8 @@ class User extends Authenticatable implements JWTSubject
         'nim',
         'faculty_id',
         'study_program_id',
+        'day',
+        'time',
     ];
 
     /**

@@ -26,6 +26,7 @@
             <nav class="nav nav-borders">
                 <a class="nav-link {{ (request()->is('admin/setting')) ? 'active ms-0' : '' }}" href="{{ route('setting.index') }}">Profil</a>
                 <a class="nav-link {{ (request()->is('admin/setting/password')) ? 'active ms-0' : '' }}" href="{{ route('change-password') }}">Ubah Password</a>
+                <a class="nav-link {{ (request()->is('admin/setting/schedules')) ? 'active ms-0' : '' }}" href="{{ route('schedules-set') }}">Ubah Jadwal Konsultasi</a>
             </nav>
             <hr class="mt-0 mb-4" />
             <div class="row">

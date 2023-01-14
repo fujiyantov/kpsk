@@ -50,4 +50,6 @@ Route::prefix('admin')
         Route::get('setting/password', [SettingController::class, 'change_password'])->name('change-password');
         Route::post('setting/upload-profile', [SettingController::class, 'upload_profile'])->name('profile-upload');
         Route::post('change-password', [SettingController::class, 'update_password'])->name('update.password');
+        Route::get('setting/schedules', [SettingController::class, 'schedules'])->name('schedules-set');
+        Route::post('setting/schedules', [SettingController::class, 'updateSchedule'])->name('update.schedule');
     });
