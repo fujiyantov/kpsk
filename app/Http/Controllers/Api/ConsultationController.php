@@ -29,8 +29,26 @@ class ConsultationController extends Controller
             $query->where('type', $type);
         })
             ->when(isset($status), function ($query) use ($status) {
-                $query->where('status', $status);
+                $query->where('status', [2,3,4,5]);
             })
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        return response(new ScheduleCollection($collections), Response::HTTP_OK);
+    }
+
+    public function pending(Request $request)
+    {
+        $type = $request->get('type');
+        $status = $request->get('status');
+
+        $collections = Schedules::when(isset($type), function ($query) use ($type) {
+            $query->where('type', $type);
+        })
+            ->when(isset($status), function ($query) use ($status) {
+                $query->where('status', [1]);
+            })
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         return response(new ScheduleCollection($collections), Response::HTTP_OK);

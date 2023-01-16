@@ -79,6 +79,7 @@ class TopicController extends Controller
             'category_id' => $request->category_id,
             'image' => $imageFileName,
             'description' => $request->description,
+            'psikolog_id' => 3,
         ]);
 
         return redirect()
@@ -115,6 +116,7 @@ class TopicController extends Controller
         $resource->title = $request->title;
         $resource->category_id = $request->category_id;
         $resource->description = $request->description;
+        $resource->psikolog_id = 3;
         $resource->save();
 
         return redirect()

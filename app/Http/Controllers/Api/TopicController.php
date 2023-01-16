@@ -13,7 +13,7 @@ class TopicController extends Controller
 {
     public function index(Request $request)
     {
-        $collections = Topics::latest()->get();
+        $collections = Topics::get();
         
         return response()->json(
             new TopicCollection($collections),

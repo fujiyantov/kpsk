@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use Psy\Util\Str;
 use Carbon\Carbon;
 use App\Models\User;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Psy\Util\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -35,6 +36,11 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (!$token = auth()->guard('api')->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $user = auth()->guard('api')->user();
+        if ($user->role_id != 4) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -135,7 +141,7 @@ class AuthController extends Controller
             'day' => $user->day,
             'time' => $user->time,
             'schedule' => $scheduleDate,
-            'dayName' => $labelOfDay,
+            'day_name' => $labelOfDay,
             
         ];
         return response()->json($resource, Response::HTTP_OK);
@@ -196,7 +202,7 @@ class AuthController extends Controller
             'name' => 'required, min:3, string',
             'nim' => 'string',
             'no_telp' => 'required, numeric',
-            'birthdate' => 'required, string',
+            // 'birthdate' => 'required, string',
             'faculty_id' => 'numeric|min:1',
             'study_program_id' => 'numeric|min:1',
         ]);

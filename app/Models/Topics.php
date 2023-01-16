@@ -21,4 +21,9 @@ class Topics extends Model
     {
         return $this->hasMany(Schedules::class, 'topic_id');
     }
+
+    public function psikolog()
+    {
+        return $this->belongsTo(User::class, 'psikolog_id');
+    }
 }

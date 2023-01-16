@@ -40,6 +40,7 @@ Route::group([
     'middleware' => 'api',
 ], function () {
     Route::get('/histories', [ConsultationController::class, 'index']);
+    Route::get('/pending', [ConsultationController::class, 'pending']);
     Route::post('/schedules', [ConsultationController::class, 'store']);
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');

@@ -21,6 +21,29 @@ class ScheduleResource extends JsonResource
             $imageUrl = Storage::url('/assets/images/' . $this->topic->image);
         }
 
+        $statusName = 'Diajukan';
+
+        switch ($statusName) {
+            case 2:
+                $statusName = 'Diterima';
+                break;
+
+            case 3:
+                $statusName = 'Ditolak';
+                break;
+
+            case 4:
+                $statusName = 'Selesai';
+                break;
+
+            case 5:
+                $statusName = 'Expired';
+                break;
+
+            default:
+                $statusName = '-';
+                break;
+        }
         return [
             'id' => $this->id,
             'patient_id' => $this->patient->id,
@@ -35,6 +58,7 @@ class ScheduleResource extends JsonResource
             'type' => $this->type,
             'diagnosis' => $this->diagnosis,
             'status' => $this->status,
+            'status_name' => $statusName,
             'created_at' => Carbon::parse($this->created_at)->toDateString(),
         ];
     }
