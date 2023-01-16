@@ -41,7 +41,7 @@ class ScheduleResource extends JsonResource
                 break;
 
             default:
-                $statusName = '-';
+                $statusName = 'Diajukan';
                 break;
         }
         return [
@@ -53,13 +53,13 @@ class ScheduleResource extends JsonResource
             'topic_id' => $this->topic->id,
             'topic_name' => $this->topic->title,
             'topic_image' => $imageUrl,
-            'date' => $this->date,
+            'date' => Carbon::parse($this->date)->format('d M Y'),
             'time' => $this->time,
             'type' => $this->type,
             'diagnosis' => $this->diagnosis,
             'status' => $this->status,
             'status_name' => $statusName,
-            'created_at' => Carbon::parse($this->created_at)->toDateString(),
+            'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }
 }

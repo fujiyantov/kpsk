@@ -28,9 +28,7 @@ class ConsultationController extends Controller
         $collections = Schedules::when(isset($type), function ($query) use ($type) {
             $query->where('type', $type);
         })
-            ->when(isset($status), function ($query) use ($status) {
-                $query->where('status', [2,3,4,5]);
-            })
+            ->whereIn('status', [2,3,4,5])
             ->orderBy('created_at', 'DESC')
             ->get();
 
@@ -45,9 +43,7 @@ class ConsultationController extends Controller
         $collections = Schedules::when(isset($type), function ($query) use ($type) {
             $query->where('type', $type);
         })
-            ->when(isset($status), function ($query) use ($status) {
-                $query->where('status', [1]);
-            })
+            ->where('status', [1])
             ->orderBy('created_at', 'DESC')
             ->get();
 

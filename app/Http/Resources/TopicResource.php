@@ -121,7 +121,7 @@ class TopicResource extends JsonResource
             'created_at' => Carbon::parse($this->created_at)->toDateString(),
             'day' => $user->day,
             'time' => $user->time,
-            'schedule' => $scheduleDate,
+            'schedule' => Carbon::parse($scheduleDate)->format('d M Y'),
             'day_name' => $labelOfDay,
         ];
     }
