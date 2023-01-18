@@ -22,6 +22,7 @@ class ConsultationController extends Controller
 
     public function index(Request $request)
     {
+        $user = auth()->guard('api')->user();
         $type = $request->get('type');
         $status = $request->get('status');
 
@@ -29,6 +30,7 @@ class ConsultationController extends Controller
             $query->where('type', $type);
         })
             ->whereIn('status', [2,3,4,5])
+            ->where('patient_id', $user->id)
             ->orderBy('created_at', 'DESC')
             ->get();
 
@@ -37,6 +39,7 @@ class ConsultationController extends Controller
 
     public function pending(Request $request)
     {
+        $user = auth()->guard('api')->user();
         $type = $request->get('type');
         $status = $request->get('status');
 
@@ -44,6 +47,7 @@ class ConsultationController extends Controller
             $query->where('type', $type);
         })
             ->where('status', [1])
+            ->where('patient_id', $user->id)
             ->orderBy('created_at', 'DESC')
             ->get();
 
@@ -77,13 +81,15 @@ class ConsultationController extends Controller
             }
 
             $resource = new Schedules();
-            $resource->patient_id = Auth::user()->id;
-            $resource->psikolog_id = $topic->psikolog_id;
-            $resource->topic_id = $request->input('topic_id');
-            $resource->date = $date;
-            $resource->time = $time;
-            $resource->type = $request->input('type');
-            $resource->status = 1;
+            $resource->patient_id   = Auth::user()->id;
+            $resource->psikolog_id  = $topic->psikolog_id;
+            $resource->topic_id     = $request->input('topic_id');
+            $resource->date         = $date;
+            $resource->time         = $time;
+            $resource->type         = $request->input('type');
+            $resource->status       = 1;
+            $resource->meet_at      = $request->meet_at;
+            $resource->no_telp      = $request->no_telp;
             $resource->save();
 
             return response()->json(['message' => 'schedule has been created'], Response::HTTP_CREATED);
