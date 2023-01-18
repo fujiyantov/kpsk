@@ -105,14 +105,14 @@ class ConsultationController extends Controller
     public function getSummeryTopic(Request $request)
     {
         $user = auth()->guard('api')->user();
-        $collections = Topics::where('patient_id', $user->id)->get();
+        $collections = Topics::all();
 
         $datas = [];
         if (count($collections) > 0) {
             foreach ($collections as $collection) {
                 $datas[] = [
                     'topic' => $collection->title,
-                    'total' => $collection->schedules->count(),
+                    'total' => $collection->schedules->where('patient_id', $user->id)->count(),
                 ];
             }
         }
