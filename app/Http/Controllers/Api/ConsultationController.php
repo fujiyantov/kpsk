@@ -105,7 +105,6 @@ class ConsultationController extends Controller
     public function getSummeryTopic(Request $request)
     {
         $user = auth()->guard('api')->user();
-        dd($user);
         $collections = Topics::where('patient_id', $user->id)->get();
 
         $datas = [];
