@@ -29,7 +29,7 @@ class ConsultationController extends Controller
         $collections = Schedules::when(isset($type), function ($query) use ($type) {
             $query->where('type', $type);
         })
-            ->whereIn('status', [2,3,4,5])
+            ->whereIn('status', [2, 3, 4, 5])
             ->where('patient_id', $user->id)
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -100,5 +100,26 @@ class ConsultationController extends Controller
             Log::info($e);
             throw $e;
         }
+    }
+
+    public function getSummeryTopic(Request $request)
+    {
+        $user = auth()->guard('api')->user();
+        dd($user);
+        $collections = Topics::where('patient_id', $user->id)->get();
+
+        $datas = [];
+        if (count($collections) > 0) {
+            foreach ($collections as $collection) {
+                $datas[] = [
+                    'topic' => $collection->title,
+                    'total' => $collection->schedules->count(),
+                ];
+            }
+        }
+
+        return response()->json([
+            'data' => $datas
+        ], Response::HTTP_OK);
     }
 }

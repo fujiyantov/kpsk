@@ -27,7 +27,7 @@ Route::post('register', [AuthController::class, 'register'])->name('auth.registe
 Route::get('/faculties', [DataMasterController::class, 'getAllFaculty']);
 Route::get('/faculties/{faculty_id}/study-programs', [DataMasterController::class, 'getStudyProgramByFaculty']);
 Route::get('/study-programs', [DataMasterController::class, 'getAllStudyProgram']);
-Route::get('/topic-summary', [DataMasterController::class, 'getSummeryTopic']);
+// Route::get('/topic-summary', [DataMasterController::class, 'getSummeryTopic']);
 
 Route::group([
     'prefix' => 'topics'
@@ -42,7 +42,8 @@ Route::group([
     Route::get('/histories', [ConsultationController::class, 'index']);
     Route::get('/pending', [ConsultationController::class, 'pending']);
     Route::post('/schedules', [ConsultationController::class, 'store']);
-
+    Route::get('/topic-summary', [ConsultationController::class, 'getSummeryTopic']);
+    
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::post('/refresh', [AuthController::class, 'refresh'])->name('auth.refresh');
     Route::post('/me', [AuthController::class, 'me'])->name('auth.me');
