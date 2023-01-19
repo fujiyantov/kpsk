@@ -78,17 +78,20 @@
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-outline timepicker">
+                                        <label class="small mb-1" for="current_password">Pilih Jam</label>
                                         <input type="time" name="time" class="form-control" id="form1"
                                             value="12:00">
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <div class="form-outline timepicker">
+                                    <div class="form-outline">
+                                        <label class="small mb-1" for="current_password">Tempat Konsultasi</label>
                                         <input type="text" name="meet_at" class="form-control" id="form1">
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <div class="form-outline timepicker">
+                                    <div class="form-outline">
+                                        <label class="small mb-1" for="current_password">No Telp (whatsapp)</label>
                                         <input type="number" name="no_telp" class="form-control">
                                     </div>
                                 </div>
