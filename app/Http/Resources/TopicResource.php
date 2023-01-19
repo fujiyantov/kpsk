@@ -123,6 +123,8 @@ class TopicResource extends JsonResource
             'time' => $user->time,
             'schedule' => Carbon::parse($scheduleDate)->format('d M Y'),
             'day_name' => $labelOfDay,
+            'no_telp' => $user->no_telp,
+            'meet_at' => $user->meet_at,
         ];
     }
 

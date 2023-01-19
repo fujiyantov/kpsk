@@ -23,7 +23,7 @@ class ScheduleResource extends JsonResource
 
         $statusName = 'Diajukan';
 
-        switch ($statusName) {
+        switch ($this->status) {
             case 2:
                 $statusName = 'Diterima';
                 break;
