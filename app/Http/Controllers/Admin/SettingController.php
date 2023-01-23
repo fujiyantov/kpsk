@@ -139,6 +139,7 @@ class SettingController extends Controller
             }
 
             $user->day = $request->day;
+            $user->day_2 = $request->day_2;
             $user->time = $request->time;
             $user->meet_at = $request->meet_at;
             $user->no_telp = $request->no_telp;

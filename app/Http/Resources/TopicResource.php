@@ -47,7 +47,47 @@ class TopicResource extends JsonResource
         }
 
         $user = $this->psikolog;
-        switch ($user->day) {
+        $scheduleDate1 = $this->getDayDate($user->day);
+
+        $date2 = null;
+        $day2 = null;
+        if (isset($user->day_2) && $user->day_2 != NULL) {
+            $scheduleDate2 = $this->getDayDate($user->day_2);
+            $date2 = Carbon::parse($scheduleDate2['date'])->format('d M Y');
+            $day2 = $scheduleDate2['day_name'];
+        }
+
+
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'category' => $category,
+            'image' => $imageUrl,
+            'description' => $this->description,
+            'created_at' => Carbon::parse($this->created_at)->toDateString(),
+            'day' => $user->day,
+            'time' => $user->time,
+            'schedule' => Carbon::parse($scheduleDate1['date'])->format('d M Y'),
+            'day_name' => $scheduleDate1['day_name'],
+            'no_telp' => $user->no_telp,
+            'meet_at' => $user->meet_at,
+            'schedule2' => $date2,
+            'day_name2' => $day2,
+        ];
+    }
+
+    private function getRequestDay($day)
+    {
+        return new DatePeriod(
+            Carbon::parse("first " . $day . " of this month"),
+            CarbonInterval::week(),
+            Carbon::parse("first " . $day . " of next month")
+        );
+    }
+
+    private function getDayDate($day)
+    {
+        switch ($day) {
             case 0:
                 $nameOfDay = 'sunday';
                 $labelOfDay = 'Minggu';
@@ -113,27 +153,8 @@ class TopicResource extends JsonResource
         }
 
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'category' => $category,
-            'image' => $imageUrl,
-            'description' => $this->description,
-            'created_at' => Carbon::parse($this->created_at)->toDateString(),
-            'day' => $user->day,
-            'time' => $user->time,
-            'schedule' => Carbon::parse($scheduleDate)->format('d M Y'),
-            'day_name' => $labelOfDay,
-            'no_telp' => $user->no_telp,
-            'meet_at' => $user->meet_at,
+            'date' => $scheduleDate,
+            'day_name' => $labelOfDay
         ];
-    }
-
-    private function getRequestDay($day)
-    {
-        return new DatePeriod(
-            Carbon::parse("first " . $day . " of this month"),
-            CarbonInterval::week(),
-            Carbon::parse("first " . $day . " of next month")
-        );
     }
 }

@@ -55,7 +55,7 @@ class UserController extends Controller
                 ->addColumn('position', function ($item) {
                     switch ($item->role_id) {
                         case '2':
-                            $strname = 'Warek III';
+                            $strname = 'Warek IV';
                             $bg = 'bg-warning';
                             break;
 
@@ -70,7 +70,7 @@ class UserController extends Controller
                             break;
 
                         default:
-                            $strname = 'Warek III';
+                            $strname = 'Warek IV';
                             $bg = 'bg-light';
                             break;
                     }
@@ -86,15 +86,15 @@ class UserController extends Controller
         $positions = collect([
             [
                 'id' => 2,
-                'name' => 'warek iii',
+                'name' => 'Warek IV',
             ],
             [
                 'id' => 3,
-                'name' => 'psikolog'
+                'name' => 'Psikolog'
             ],
             [
                 'id' => 4,
-                'name' => 'patient',
+                'name' => 'Mahasiswa',
             ]
         ]);
 

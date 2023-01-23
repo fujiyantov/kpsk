@@ -128,7 +128,7 @@ class AuthController extends Controller
             'email' => $user->email,
             'email_verified_at' => $user->email_verified_at,
             'password' => $user->password,
-            'profile' => $user->profile,
+            'profile' => 'https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper.png',
             'full_name' => $user->full_name,
             'no_telp' => $user->no_telp,
             'bop' => $user->bop,
@@ -142,6 +142,7 @@ class AuthController extends Controller
             'time' => $user->time,
             'schedule' => $scheduleDate,
             'day_name' => $labelOfDay,
+            'gender' => $user->gender == 0 ? 'Laki-laki' : 'Perempuan',
             
         ];
         return response()->json($resource, Response::HTTP_OK);
@@ -205,7 +206,13 @@ class AuthController extends Controller
             // 'birthdate' => 'required, string',
             'faculty_id' => 'numeric|min:1',
             'study_program_id' => 'numeric|min:1',
+            'gender' => 'string',
         ]);
+
+        $gender = 1;
+        if (strtolower($request->gender) == 'laki-laki') {
+            $gender = 0;
+        }
 
         $user = new User();
         $user->email = $request->email;
@@ -219,6 +226,7 @@ class AuthController extends Controller
         $user->role_id = 4;
         $user->faculty_id = $request->faculty_id;
         $user->study_program_id = $request->study_program_id;
+        $user->gender = $gender;
         $user->save();
 
         $credentials = request(['email', 'password']);

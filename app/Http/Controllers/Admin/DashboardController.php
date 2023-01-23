@@ -14,26 +14,18 @@ class DashboardController extends Controller
     {
         $topics = Topics::get();
         $article = News::get()->count();
-        $mahasiswa = User::where('role_id', 3)->get()->count(); // mahasiswa
+        $mahasiswa = User::where('role_id', 4)->get()->count(); // mahasiswa
 
-        $collections = Topics::all();
-
-        $datas = [];
         $topicName = [];
         $topicData = [];
         $topicColor = [];
+        
         foreach ($topics as $topic) {
-            // $datas[] = [
-            //     'topics' => $topic->title,
-            //     'total' => $topic->schedules->count(),
-            // ];
-
             $topicName[] = $topic->title;
             $topicData[] = $topic->schedules->count();
             $topicColor[] = 'rgba(0,172,105,1)';
         }
-        // dd($topicName, $topicData);
-        $aa = 'aaa';
+        
         return view('pages.admin.dashboard',[
             'topic' => $topics->count(),
             'article' => $article,

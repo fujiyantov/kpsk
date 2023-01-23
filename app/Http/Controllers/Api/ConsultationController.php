@@ -29,7 +29,7 @@ class ConsultationController extends Controller
         $collections = Schedules::when(isset($type), function ($query) use ($type) {
             $query->where('type', $type);
         })
-            ->whereIn('status', [2, 3, 4, 5])
+            ->whereIn('status', [4, 5])
             ->where('patient_id', $user->id)
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -46,7 +46,7 @@ class ConsultationController extends Controller
         $collections = Schedules::when(isset($type), function ($query) use ($type) {
             $query->where('type', $type);
         })
-            ->where('status', [1])
+            ->where('status', [1,2,3])
             ->where('patient_id', $user->id)
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -75,10 +75,10 @@ class ConsultationController extends Controller
             $date = $request->input('date');
             $time = $request->input('time');
 
-            if ($request->input('topic_id') == self::ONLINE) {
+            /* if ($request->input('topic_id') == self::ONLINE) {
                 $date = Carbon::now()->toDateString();
                 $time = Carbon::now()->toTimeString();
-            }
+            } */
 
             $resource = new Schedules();
             $resource->patient_id   = Auth::user()->id;

@@ -77,6 +77,18 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
+                                    <label class="small mb-1" for="current_password">Pilih Hari Lainnya</label>
+                                    <select name="day_2" class="form-select" required>
+                                        <option value="1">Senin</option>
+                                        <option value="2">Selasa</option>
+                                        <option value="3">Rabu</option>
+                                        <option value="4">Kamis</option>
+                                        <option value="5">Jumat</option>
+                                        <option value="6">Sabtu</option>
+                                        <option value="0">Minggu</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
                                     <div class="form-outline timepicker">
                                         <label class="small mb-1" for="current_password">Pilih Jam</label>
                                         <input type="time" name="time" class="form-control" id="form1"
