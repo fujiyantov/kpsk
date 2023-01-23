@@ -31,7 +31,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
         $credentials = request(['email', 'password']);
 
@@ -43,6 +43,9 @@ class AuthController extends Controller
         if ($user->role_id != 4) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
+        $user->fcm_token = $request->fcm_token;
+        $user->save();
 
         return $this->respondWithToken($token);
     }
@@ -227,6 +230,7 @@ class AuthController extends Controller
         $user->faculty_id = $request->faculty_id;
         $user->study_program_id = $request->study_program_id;
         $user->gender = $gender;
+        $user->fcm_token = $request->fcm_token;
         $user->save();
 
         $credentials = request(['email', 'password']);

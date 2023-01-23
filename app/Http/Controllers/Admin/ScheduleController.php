@@ -145,6 +145,8 @@ class ScheduleController extends Controller
                 $message = 'Maaf, jadwal konsultasi kamu tidak dapat disetujui, silahkan untuk mencoba dilain waktu';
             }
 
+            sendNotificationFirebase($message, $item->patient);
+
             return redirect()->back();
         } catch (\Exception $th) {
             throw $th;
@@ -170,6 +172,8 @@ class ScheduleController extends Controller
 
             // TODO:: send notification to device user
             $message = 'Terima kasih, layanan konsultasi kamu telah selesai';
+
+            sendNotificationFirebase($message, $item->patient);
 
             return redirect()->back();
         } catch (\Exception $th) {
