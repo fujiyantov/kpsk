@@ -43,10 +43,7 @@ class ConsultationController extends Controller
         $type = $request->get('type');
         $status = $request->get('status');
 
-        $collections = Schedules::when(isset($type), function ($query) use ($type) {
-            $query->where('type', $type);
-        })
-            ->where('status', [1,2,3])
+        $collections = Schedules::whereIn('status', [1,2,3])
             ->where('patient_id', $user->id)
             ->orderBy('created_at', 'DESC')
             ->get();
