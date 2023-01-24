@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Schedules;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -124,7 +125,9 @@ class ScheduleController extends Controller
             $item->is_read = 1;
             $item->save();
         }
-        return view('pages.admin.schedules.show', compact('item'));
+
+        $chats = Chat::where('schedule_id', $id)->get();
+        return view('pages.admin.schedules.show', compact('item', 'chats'));
     }
 
     public function update(Request $request, $id)
@@ -139,7 +142,6 @@ class ScheduleController extends Controller
             $item->status = $request->status;
             $item->save();
 
-            // TODO:: send notification to device user
             $message = 'Selamat, jadwal konsultasi kamu telah disetujui, silahkan untuk datang pada waktu yang sudah ditentukan';
             if ($request->status == 3) {
                 $message = 'Maaf, jadwal konsultasi kamu tidak dapat disetujui, silahkan untuk mencoba dilain waktu';
@@ -170,7 +172,6 @@ class ScheduleController extends Controller
             $item->status = Schedules::FINISH;
             $item->save();
 
-            // TODO:: send notification to device user
             $message = 'Terima kasih, layanan konsultasi kamu telah selesai';
 
             sendNotificationFirebase($message, $item->patient);
@@ -179,5 +180,84 @@ class ScheduleController extends Controller
         } catch (\Exception $th) {
             throw $th;
         }
+    }
+
+    /* public function chatAjax(Request $request, $id)
+    {
+        $item = Chat::where('schedule_id', $id)->orderBy('created_at', 'desc')->first();
+        $response = '';
+
+        if ($item) {
+            $textAlign = $item->psikolog_id == Auth::user()->id ? "text-align:right" : "";
+            $textName = $item->psikolog_id != Auth::user()->id ? $item->patient->full_name : 'You';
+            $textDate = Carbon::parse($item->created_at)->diffForHumans();
+            $textMessage = $item->messages;
+
+            $response = '<li class="list-group-item"
+                style="background: #F7F9FA; ' . $textAlign . '">
+                <h6>' . $textName . '
+                </h6>
+                <i data-feather="clock"
+                    style="width: 12px; vertical-align: middle"></i><small>
+                    ' . $textDate . '</small>
+                <br />
+                <div
+                    class="row ' . $textAlign . '>
+                    <small class="text-muted">' . $textMessage . '</small>
+                </div>
+            </li>';
+        }
+
+        return $response;
+    } */
+
+    public function chatAjax(Request $request, $id)
+    {
+        $items = Chat::where('schedule_id', $id)->orderBy('id', 'asc')->get();
+        $response = '';
+
+        if ($items) {
+            foreach ($items as $item) {
+                $textAlign = $item->psikolog_id == Auth::user()->id ? "text-align:right" : "";
+                $textName = $item->psikolog_id != Auth::user()->id ? $item->patient->full_name : 'You';
+                $textDate = Carbon::parse($item->created_at)->diffForHumans();
+                $textMessage = $item->messages;
+
+                $response = '<div class=""><li class="list-group-item"
+                style="background: #F7F9FA; ' . $textAlign . '">
+                <h6>' . $textName . '
+                </h6>
+                <i data-feather="clock"
+                    style="width: 12px; vertical-align: middle"></i><small>
+                    ' . $textDate . '</small>
+                <br />
+                <div
+                    class="row" style="' . $textAlign . '">
+                    <small class="text-muted">' . $textMessage . '</small>
+                </div>
+            </li></div>';
+
+                echo $response;
+            }
+        }
+    }
+
+    public function chatAjaxStore(Request $request, $id)
+    {
+        $item = Schedules::findOrFail($id);
+        $store = new Chat();
+        $store->schedule_id = $id;
+        $store->psikolog_id = $item->psikolog_id;
+        if (Auth::user()->id != $item->psikolog_id) {
+            $store->patient_id = $item->patient_id;
+        }
+        $store->messages = $request->msg;
+        $store->save();
+
+        $message = substr($request->msg, 0, 60) . '...';
+
+        sendNotificationFirebase($message, $item->patient);
+
+        return 201;
     }
 }

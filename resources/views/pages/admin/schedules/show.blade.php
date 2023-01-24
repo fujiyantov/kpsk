@@ -44,7 +44,8 @@
                                         data-bs-target="#pills-home" type="button" role="tab"
                                         aria-controls="pills-home" aria-selected="true">DATA DIRI</button>
                                 </li>
-                                <li class="nav-item" role="presentation">
+                                <li class="nav-item" role="presentation"
+                                    @if ($item->type == 1) style="display: none" @endif>
                                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
                                         data-bs-target="#pills-profile" type="button" role="tab"
                                         aria-controls="pills-profile" aria-selected="false">CHAT</button>
@@ -239,90 +240,32 @@
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10">
-                                            <ul class="list-group list-group-flush p-2">
-                                                <div class="overflow-auto" style="max-height: 500px">
-                                                    <li class="list-group-item" style="background: #F7F9FA">
-                                                        <h6>Mahasiswa</h6>
-                                                        <i data-feather="clock"
-                                                            style="width: 12px; vertical-align: middle"></i><small>
-                                                            2 min</small> <br />
-                                                        <div class="row">
-                                                            <div class="col-8">
-                                                                <small class="text-muted">Mengajukan Jadwal Konsultasi
-                                                                    dengan topik
-                                                                    <b>{{ $item->topic->title }}</b></small>
-                                                            </div>
-                                                        </div>
-                                                    </li>
+                                            <ul class="list-group list-group-flush p-2 chat-section overflow-auto"
+                                                style="max-height: 500px">
+                                                @foreach ($chats as $chat)
                                                     <li class="list-group-item"
-                                                        style="background: #F7F9FA; text-align:right">
-                                                        <h6>You</h6>
+                                                        style="background: #F7F9FA; @if ($chat->psikolog_id == Auth::user()->id) text-align:right @endif">
+                                                        <h6>{{ $chat->psikolog_id != Auth::user()->id ? $chat->patient->full_name : 'You' }}
+                                                        </h6>
                                                         <i data-feather="clock"
                                                             style="width: 12px; vertical-align: middle"></i><small>
-                                                            now</small> <br />
-                                                        <div class="row">
-                                                            <small class="text-muted">Mengajukan Jadwal Konsultasi
-                                                                dengan topik
+                                                            {{ \Carbon\Carbon::parse($chat->created_at)->diffForHumans() }}</small>
+                                                        <br />
+                                                        <div
+                                                            class="row @if ($chat->psikolog_id == Auth::user()->id) text-align:right @endif">
+                                                            <small class="text-muted">{{ $chat->messages }}</small>
                                                         </div>
                                                     </li>
-                                                    <li class="list-group-item" style="background: #F7F9FA">
-                                                        <h6>Mahasiswa</h6>
-                                                        <i data-feather="clock"
-                                                            style="width: 12px; vertical-align: middle"></i><small>
-                                                            2 min</small> <br />
-                                                        <div class="row">
-                                                            <div class="col-8">
-                                                                <small class="text-muted">Mengajukan Jadwal Konsultasi
-                                                                    dengan topik
-                                                                    <b>{{ $item->topic->title }}</b></small>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="list-group-item"
-                                                        style="background: #F7F9FA; text-align:right">
-                                                        <h6>You</h6>
-                                                        <i data-feather="clock"
-                                                            style="width: 12px; vertical-align: middle"></i><small>
-                                                            now</small> <br />
-                                                        <div class="row">
-                                                            <small class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad numquam libero provident nam quam enim nihil aperiam ducimus, a at sed recusandae mollitia sint nemo amet, nostrum magnam laboriosam. Doloribus. Lorem ipsum, dolor sit amet consectetur adipisicing elit. A at nemo, tempora voluptates reiciendis dolores amet ad et qui inventore accusamus alias excepturi in, modi odio harum vitae delectus adipisci? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, expedita quam, numquam eum maxime, aliquid nobis nemo dicta consequatur iure temporibus est voluptatem quis aspernatur at eveniet libero fuga. Nisi! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam dolorem, necessitatibus ratione laudantium reprehenderit aperiam. Eligendi quisquam laudantium aliquid consectetur sapiente error rerum recusandae, adipisci tempore suscipit expedita cumque inventore.
-                                                        </div>
-                                                    </li>
-                                                    <li class="list-group-item"
-                                                        style="background: #F7F9FA; text-align:right">
-                                                        <h6>You</h6>
-                                                        <i data-feather="clock"
-                                                            style="width: 12px; vertical-align: middle"></i><small>
-                                                            now</small> <br />
-                                                        <div class="row">
-                                                            <small class="text-muted">Mengajukan Jadwal Konsultasi
-                                                                dengan topik
-                                                        </div>
-                                                    </li>
-                                                    <li class="list-group-item"
-                                                        style="background: #F7F9FA; text-align:right">
-                                                        <h6>You</h6>
-                                                        <i data-feather="clock"
-                                                            style="width: 12px; vertical-align: middle"></i><small>
-                                                            now</small> <br />
-                                                        <div class="row">
-                                                            <small class="text-muted">Mengajukan Jadwal Konsultasi
-                                                                dengan topik
-                                                        </div>
-                                                    </li>
-                                                </div>
+                                                @endforeach
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="row mt-5">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10">
-                                            <form class="form-inline">
-                                                <textarea class="form-control mb-2 mr-sm-2" rows="5" cols="5" id="inlineFormInputName2"
-                                                    placeholder="typing..."></textarea>
-                                                <button type="submit" class="btn btn-primary mb-2 btn-md"
-                                                    style="float: right">Send</button>
-                                            </form>
+                                            <textarea class="form-control mb-2 mr-sm-2" rows="5" cols="5" id="chat-msg" placeholder="typing..."></textarea>
+                                            <button type="submit" class="btn btn-primary mb-2 btn-md" id="chat-send"
+                                                style="float: right">Send</button>
                                         </div>
                                     </div>
                                 </div>
@@ -334,4 +277,57 @@
             </div>
         </div>
     </main>
+@endsection
+@section('script')
+    <script>
+        function fetchdata() {
+            $.ajax({
+                url: "{{ route('chat.ajax', [$item->id]) }}",
+                type: 'GET',
+                success: function(data) {
+                    // Perform operation on return value
+                    $('.chat-section').html(data)
+                    // $('.chat-section').append(data)
+                },
+                complete: function(data) {
+                    setTimeout(fetchdata, 1000);
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            // $('#chat-send').prop('disabled', true);
+            setTimeout(fetchdata, 1000);
+        });
+
+        $("#chat-send").keypress(function() {
+            alert("Handler for .keyup() called.");
+            let chat = $('#chat-msg').val();
+            if (chat.length > 0) {
+                // alert(chat.length)
+                $('#chat-send').prop('disabled', false);
+            }
+        });
+
+        $('#chat-send').on('click', function() {
+            $('#chat-send').prop('disabled', true);
+            $('#chat-send').text('loading')
+            let chat = $('#chat-msg').val();
+            $.ajax({
+                url: "{{ route('chat.ajax.store', [$item->id]) }}",
+                type: 'POST',
+                data: {
+                    _token: '{!! csrf_token() !!}',
+                    msg: chat
+                },
+                success: function(data) {
+                    console.log(data);
+                    // Perform operation on return value
+                    $('#chat-msg').val('')
+                    $('#chat-send').text('Send')
+                    $('#chat-send').prop('disabled', false);
+                },
+            });
+        })
+    </script>
 @endsection

@@ -52,4 +52,8 @@ Route::prefix('admin')
         Route::post('change-password', [SettingController::class, 'update_password'])->name('update.password');
         Route::get('setting/schedules', [SettingController::class, 'schedules'])->name('schedules-set');
         Route::post('setting/schedules', [SettingController::class, 'updateSchedule'])->name('update.schedule');
+
+        // CHAT
+        Route::get('/chat/{schedule_id}', [ScheduleController::class, 'chatAjax'])->name('chat.ajax');
+        Route::post('/chat/{schedule_id}', [ScheduleController::class, 'chatAjaxStore'])->name('chat.ajax.store');
     });
