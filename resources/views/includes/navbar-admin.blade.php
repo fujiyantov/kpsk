@@ -29,7 +29,7 @@
                     href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     <span class="badge text-danger ms-auto btn-notif"><span
-                            class="notif-value">{{ notifCount() }}</span><i data-feather="message-square"
+                            class="notif-value">{{ notifCountChat() }}</span><i data-feather="message-square"
                             style="color: #00ac69"></i></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
@@ -37,7 +37,7 @@
                     <ul class="list-group list-group-flush p-2" style="width: 25rem;">
                         <div class="overflow-auto" style="max-height: 500px">
                             @php
-                                $collections = notifCountMessage();
+                                $collections = notifCountMessageChat();
                             @endphp
                             @foreach ($collections as $item)
                                 <li class="list-group-item" style="background: #F7F9FA">
@@ -46,11 +46,10 @@
                                         {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small> <br />
                                     <div class="row">
                                         <div class="col-8">
-                                            <small class="text-muted">Mengajukan Jadwal Konsultasi dengan topik
-                                                <b>{{ $item->topic->title }}</b></small>
+                                            <small class="text-muted">{{ $item->messages }}</small>
                                         </div>
                                         <div class="col-3">
-                                            <a href="{{ route('schedules.show', [$item->id]) }}?is_read=true"
+                                            <a href="{{ route('chat.show', [$item->id]) }}?is_read=true"
                                                 class="btn btn-outline-success p-2 btn-xs mt-n4" style="float: right;">
                                                 <i class="fas fa-eye"></i> &nbsp; Lihat
                                             </a>

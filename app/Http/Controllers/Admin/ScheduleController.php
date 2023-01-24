@@ -260,4 +260,18 @@ class ScheduleController extends Controller
 
         return 201;
     }
+
+    public function showChat(Request $request, $id)
+    {
+        $chat = Chat::findOrFail($id);
+        if ($request->get('is_read') == true) {
+            $chat->is_read = 1;
+            $chat->save();
+        }
+
+        $item = Schedules::where('id', $chat->schedule_id)->firstOrFail();
+
+        $chats = Chat::where('schedule_id', $id)->get();
+        return view('pages.admin.schedules.show', compact('item', 'chats'));
+    }
 }

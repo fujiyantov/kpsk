@@ -16,6 +16,7 @@ class Chat extends Model
         'patient_id',
         'psikolog_id',
         'messages',
+        'is_read',
     ];
 
     public function patient()

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Chat;
 use App\Models\Letter;
 use App\Models\LetterHistories;
 use App\Models\Schedules;
@@ -20,6 +21,28 @@ function notifCountMessage()
 
     $user = Auth::user();
     $query = Schedules::where('psikolog_id', $user->id);
+    $collections = $query->where('is_read', 0)->orderBy('created_at', 'desc')->get();
+
+    return $collections;
+}
+
+/* CHAT */
+
+function notifCountChat()
+{
+
+    $user = Auth::user();
+    $query = Chat::whereNull('psikolog_id');
+    $count = $query->where('is_read', 0)->count();
+
+    return $count;
+}
+
+function notifCountMessageChat()
+{
+
+    $user = Auth::user();
+    $query = Chat::whereNull('psikolog_id');
     $collections = $query->where('is_read', 0)->orderBy('created_at', 'desc')->get();
 
     return $collections;
