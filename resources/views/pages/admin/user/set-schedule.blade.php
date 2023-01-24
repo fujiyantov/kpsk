@@ -52,7 +52,7 @@
                 <div class="col-lg-8">
                     <!-- Change password card-->
                     <div class="card mb-4">
-                        <div class="card-header">Ubah Password</div>
+                        <div class="card-header">Ubah Jadwal Konsultasi</div>
                         <div class="card-body">
                             @if (session()->has('success'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
