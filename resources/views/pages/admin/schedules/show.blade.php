@@ -247,14 +247,13 @@
                                                         style="background: #F7F9FA; @if ($chat->psikolog_id == Auth::user()->id) text-align:right @endif">
                                                         <h6>{{ $chat->psikolog_id != Auth::user()->id ? $chat->patient->full_name : 'You' }}
                                                         </h6>
-                                                        <i data-feather="clock"
-                                                            style="width: 12px; vertical-align: middle"></i><small>
-                                                            {{ \Carbon\Carbon::parse($chat->created_at)->diffForHumans() }}</small>
-                                                        <br />
                                                         <div
                                                             class="row @if ($chat->psikolog_id == Auth::user()->id) text-align:right @endif">
-                                                            <small class="text-muted">{{ $chat->messages }}</small>
+                                                            <small>{{ $chat->messages }}</small>
                                                         </div>
+                                                        <i data-feather="clock"
+                                                            style="width: 12px; vertical-align: middle"></i><small class="text-muted">
+                                                            {{ \Carbon\Carbon::parse($chat->created_at)->addHour(7)->format('H:i') }}</small>
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -263,7 +262,7 @@
                                     <div class="row mt-5">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10">
-                                            <textarea class="form-control mb-2 mr-sm-2" rows="5" cols="5" id="chat-msg" placeholder="typing..."></textarea>
+                                            <textarea class="form-control mb-2 mr-sm-2" rows="5" cols="5" id="chat-msg" placeholder="Type Message..."></textarea>
                                             <button type="submit" class="btn btn-primary mb-2 btn-md" id="chat-send"
                                                 style="float: right">Send</button>
                                         </div>

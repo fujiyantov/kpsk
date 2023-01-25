@@ -220,21 +220,20 @@ class ScheduleController extends Controller
             foreach ($items as $item) {
                 $textAlign = $item->psikolog_id == Auth::user()->id ? "text-align:right" : "";
                 $textName = $item->psikolog_id != Auth::user()->id ? $item->patient->full_name : 'You';
-                $textDate = Carbon::parse($item->created_at)->diffForHumans();
+                $textDate = Carbon::parse($item->created_at)->addHour('7')->format('H:i');
                 $textMessage = $item->messages;
 
                 $response = '<div class=""><li class="list-group-item"
                 style="background: #F7F9FA; ' . $textAlign . '">
                 <h6>' . $textName . '
                 </h6>
-                <i data-feather="clock"
-                    style="width: 12px; vertical-align: middle"></i><small>
-                    ' . $textDate . '</small>
-                <br />
                 <div
-                    class="row" style="' . $textAlign . '">
-                    <small class="text-muted">' . $textMessage . '</small>
+                    class="row mb-1" style="' . $textAlign . '">
+                    <small>' . $textMessage . '</small>
                 </div>
+                <i data-feather="clock"
+                    style="width: 12px; vertical-align: middle"></i><small class="text-muted">
+                    ' . $textDate . '</small>
             </li></div>';
 
                 echo $response;

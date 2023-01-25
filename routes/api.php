@@ -60,5 +60,6 @@ Route::group([
         'prefix' => 'chat'
     ], function () {
         Route::get('/schedule/{schedule_id}', [ChatController::class, 'index']);
+        Route::post('/schdules', [ChatController::class, 'chatStoreAPI']);
     });
 });
