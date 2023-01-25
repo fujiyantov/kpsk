@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\ConsultationController;
 use App\Http\Controllers\Api\DataMasterController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,5 +54,11 @@ Route::group([
     ], function () {
         Route::get('/', [NewsController::class, 'index']);
         Route::get('/{id}', [NewsController::class, 'show']);
+    });
+
+    Route::group([
+        'prefix' => 'chat'
+    ], function () {
+        Route::get('/schedule/{schedule_id}', [ChatController::class, 'index']);
     });
 });
