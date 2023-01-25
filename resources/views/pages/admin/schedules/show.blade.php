@@ -45,7 +45,7 @@
                                         aria-controls="pills-home" aria-selected="true">DATA DIRI</button>
                                 </li>
                                 <li class="nav-item" role="presentation"
-                                    @if ($item->type == 1 || $item->status == 2) style="display: none" @endif>
+                                    @if ($item->type == 1 || $item->status != 2) style="display: none" @endif>
                                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
                                         data-bs-target="#pills-profile" type="button" role="tab"
                                         aria-controls="pills-profile" aria-selected="false">CHAT</button>
