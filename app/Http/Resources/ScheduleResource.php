@@ -61,6 +61,7 @@ class ScheduleResource extends JsonResource
             'status_name' => $statusName,
             'meet_at' => $this->meet_at,
             'no_telp' => $this->no_telp,
+            'description' => $this->description,
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }

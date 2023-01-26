@@ -123,16 +123,12 @@
                                                         <th scope="row" style="width: 25%">Layanan Konsultasi</th>
                                                         <td>:
                                                             @php
-                                                                $type = 'online';
-                                                                $typeIcon = 'video';
-                                                                
+                                                                $type = 'Chat';
                                                                 if ($item->type == 1) {
-                                                                    $type = 'offline';
-                                                                    $typeIcon = 'smile';
+                                                                    $type = 'Tatap Muka';
                                                                 }
                                                                 
                                                             @endphp
-                                                            <i class="fa fa-{{ $typeIcon }}" style="color: #00ac69"></i>
                                                             {{ $type }}
                                                         </td>
                                                     </tr>
@@ -147,6 +143,10 @@
                                                     <tr>
                                                         <th scope="row" style="width: 25%">Tanggal diajukan</th>
                                                         <td>: {{ $item->created_at->format('d M Y H.i') }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row" style="width: 25%">Keterangan</th>
+                                                        <td>: {{ $item->description }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -176,9 +176,16 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    <div class="row gx-3 mb-3">
+                                                        <div class="col-md-12">
+                                                            <label for="">Ketarangan</label>
+                                                            <input name="description" type="text" placeholder="masukan keterangan" class="form-control" />
+                                                        </div>
+                                                    </div>
                                                     <!-- Submit button-->
                                                     <button class="btn btn-success" type="submit" style="float: right">
-                                                        Kirim &nbsp; <div class="nav-link-icon"><i data-feather="send"></i>
+                                                        Kirim &nbsp; <div class="nav-link-icon"><i
+                                                                data-feather="send"></i>
                                                         </div>
                                                     </button>
                                                 </form>
@@ -252,7 +259,8 @@
                                                             <small>{{ $chat->messages }}</small>
                                                         </div>
                                                         <i data-feather="clock"
-                                                            style="width: 12px; vertical-align: middle"></i><small class="text-muted">
+                                                            style="width: 12px; vertical-align: middle"></i><small
+                                                            class="text-muted">
                                                             {{ \Carbon\Carbon::parse($chat->created_at)->addHour(7)->format('H:i') }}</small>
                                                     </li>
                                                 @endforeach
@@ -262,7 +270,8 @@
                                     <div class="row mt-5">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10">
-                                            <textarea class="form-control mb-2 mr-sm-2" rows="5" cols="5" id="chat-msg" placeholder="Type Message..."></textarea>
+                                            <textarea class="form-control mb-2 mr-sm-2" rows="5" cols="5" id="chat-msg"
+                                                placeholder="Type Message..."></textarea>
                                             <button type="submit" class="btn btn-primary mb-2 btn-md" id="chat-send"
                                                 style="float: right">Send</button>
                                         </div>

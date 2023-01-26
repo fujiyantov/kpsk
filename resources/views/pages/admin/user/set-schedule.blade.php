@@ -95,7 +95,7 @@
                                             value="12:00">
                                     </div>
                                 </div>
-                                <div class="mb-3">
+                                {{-- <div class="mb-3">
                                     <div class="form-outline">
                                         <label class="small mb-1" for="current_password">Tempat Konsultasi</label>
                                         <input type="text" name="meet_at" class="form-control" id="form1">
@@ -106,7 +106,7 @@
                                         <label class="small mb-1" for="current_password">No Telp (whatsapp)</label>
                                         <input type="number" name="no_telp" class="form-control">
                                     </div>
-                                </div>
+                                </div> --}}
                                 <button class="btn btn-success" type="submit">Perbarui Jadwal &nbsp; <div
                                         class="nav-link-icon"><i data-feather="check-circle"></i></button>
                             </form>

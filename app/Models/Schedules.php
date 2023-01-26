@@ -26,6 +26,7 @@ class Schedules extends Model
         'status',
         'meet_at',
         'no_telp',
+        'description',
     ];
 
     public function patient()

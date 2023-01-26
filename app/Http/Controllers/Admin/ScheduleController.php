@@ -61,15 +61,15 @@ class ScheduleController extends Controller
                     return $item->topic->title;
                 })
                 ->addColumn('type', function ($item) {
-                    $type = 'online';
+                    $type = 'Chat';
                     $typeIcon = 'video';
 
                     if ($item->type == 1) {
-                        $type = 'offline';
+                        $type = 'Tatap Muka';
                         $typeIcon = 'smile';
                     }
 
-                    return '<i class="fa fa-' . $typeIcon . '" style="color: #00ac69"></i> &nbsp; ' . $type;
+                    return $type;
                 })
                 ->addColumn('status', function ($item) {
                     switch ($item->status) {
@@ -140,6 +140,7 @@ class ScheduleController extends Controller
 
             $item = Schedules::findOrFail($id);
             $item->status = $request->status;
+            $item->description = $request->description;
             $item->save();
 
             $message = 'Selamat, jadwal konsultasi kamu telah disetujui, silahkan untuk datang pada waktu yang sudah ditentukan';
