@@ -36,6 +36,14 @@
                 </a>
             @endif
 
+            @if (Auth::user()->role_id == 2)
+                <a class="nav-link {{ request()->is('admin/schedules*') ? 'active' : '' }}"
+                    href="{{ route('schedules.rekap') }}">
+                    <div class="nav-link-icon"><i data-feather="users"></i></div>
+                    Daftar Rekapitulasi
+                </a>
+            @endif
+
             @if (Auth::user()->role_id == 1)
                 <a class="nav-link {{ request()->is('admin/user*') ? 'active' : '' }}" href="{{ route('user.index') }}">
                     <div class="nav-link-icon"><i data-feather="users"></i></div>

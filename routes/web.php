@@ -57,4 +57,6 @@ Route::prefix('admin')
         Route::get('/chat/{schedule_id}', [ScheduleController::class, 'chatAjax'])->name('chat.ajax');
         Route::post('/chat/{schedule_id}', [ScheduleController::class, 'chatAjaxStore'])->name('chat.ajax.store');
         Route::get('/show-chat/{chat_id}', [ScheduleController::class, 'showChat'])->name('chat.show');
+
+        Route::get('/schedule/rekap', [ScheduleController::class, 'rekap'])->name('schedules.rekap');
     });

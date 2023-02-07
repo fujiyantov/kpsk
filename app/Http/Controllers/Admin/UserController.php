@@ -54,6 +54,11 @@ class UserController extends Controller
                 })
                 ->addColumn('position', function ($item) {
                     switch ($item->role_id) {
+                        case '1':
+                            $strname = 'Admin';
+                            $bg = 'bg-dark';
+                            break;
+
                         case '2':
                             $strname = 'Warek IV';
                             $bg = 'bg-warning';
@@ -84,6 +89,10 @@ class UserController extends Controller
         }
 
         $positions = collect([
+            [
+                'id' => 1,
+                'name' => 'Admin',
+            ],
             [
                 'id' => 2,
                 'name' => 'Warek IV',
@@ -157,6 +166,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
 
+        // Untuk validasi
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email',

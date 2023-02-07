@@ -45,7 +45,7 @@
                                         aria-controls="pills-home" aria-selected="true">DATA DIRI</button>
                                 </li>
                                 <li class="nav-item" role="presentation"
-                                    @if ($item->type == 1 || $item->status != 2) style="display: none" @endif>
+                                    @if ($item->type == 1) style="display: none" @endif>
                                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
                                         data-bs-target="#pills-profile" type="button" role="tab"
                                         aria-controls="pills-profile" aria-selected="false">CHAT</button>
@@ -179,7 +179,8 @@
                                                     <div class="row gx-3 mb-3">
                                                         <div class="col-md-12">
                                                             <label for="">Ketarangan</label>
-                                                            <input name="description" type="text" placeholder="masukan keterangan" class="form-control" />
+                                                            <input name="description" type="text"
+                                                                placeholder="masukan keterangan" class="form-control" />
                                                         </div>
                                                     </div>
                                                     <!-- Submit button-->
@@ -244,38 +245,59 @@
                                 <!-- CHAT -->
                                 <div class="tab-pane fade" id="pills-profile" role="tabpanel"
                                     aria-labelledby="pills-profile-tab">
+
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10">
                                             <ul class="list-group list-group-flush p-2 chat-section overflow-auto"
                                                 style="max-height: 500px">
-                                                @foreach ($chats as $chat)
-                                                    <li class="list-group-item"
-                                                        style="background: #F7F9FA; @if ($chat->psikolog_id == Auth::user()->id) text-align:right @endif">
-                                                        <h6>{{ $chat->psikolog_id != Auth::user()->id ? $chat->patient->full_name : 'You' }}
-                                                        </h6>
-                                                        <div
-                                                            class="row @if ($chat->psikolog_id == Auth::user()->id) text-align:right @endif">
-                                                            <small>{{ $chat->messages }}</small>
-                                                        </div>
-                                                        <i data-feather="clock"
-                                                            style="width: 12px; vertical-align: middle"></i><small
-                                                            class="text-muted">
-                                                            {{ \Carbon\Carbon::parse($chat->created_at)->addHour(7)->format('H:i') }}</small>
-                                                    </li>
-                                                @endforeach
+                                                @if (Auth::user()->role_id == 3)
+                                                    @foreach ($chats as $chat)
+                                                        <li class="list-group-item"
+                                                            style="background: #F7F9FA; @if ($chat->psikolog_id == Auth::user()->id) text-align:right @endif">
+                                                            <h6>{{ $chat->psikolog_id != Auth::user()->id ? $chat->patient->full_name : 'You' }}
+                                                            </h6>
+                                                            <div
+                                                                class="row @if ($chat->psikolog_id == Auth::user()->id) text-align:right @endif">
+                                                                <small>{{ $chat->messages }}</small>
+                                                            </div>
+                                                            <i data-feather="clock"
+                                                                style="width: 12px; vertical-align: middle"></i><small
+                                                                class="text-muted">
+                                                                {{ \Carbon\Carbon::parse($chat->created_at)->addHour(7)->format('H:i') }}</small>
+                                                        </li>
+                                                    @endforeach
+                                                @else
+                                                    @foreach ($chats as $chat)
+                                                        <li class="list-group-item"
+                                                            style="background: #F7F9FA; @if ($chat->psikolog_id != null) text-align:right @endif">
+                                                            <h6>{{ $chat->psikolog_id == null ? $chat->patient->full_name : $chat->psikolog->full_name }}
+                                                            </h6>
+                                                            <div
+                                                                class="row @if ($chat->psikolog_id != null) text-align:right @endif">
+                                                                <small>{{ $chat->messages }}</small>
+                                                            </div>
+                                                            <i data-feather="clock"
+                                                                style="width: 12px; vertical-align: middle"></i><small
+                                                                class="text-muted">
+                                                                {{ \Carbon\Carbon::parse($chat->created_at)->addHour(7)->format('H:i') }}</small>
+                                                        </li>
+                                                    @endforeach
+                                                @endif
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="row mt-5">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-10">
-                                            <textarea class="form-control mb-2 mr-sm-2" rows="5" cols="5" id="chat-msg"
-                                                placeholder="Type Message..."></textarea>
-                                            <button type="submit" class="btn btn-primary mb-2 btn-md" id="chat-send"
-                                                style="float: right">Send</button>
+                                    @if ($item->status == 2)
+                                        <div class="row mt-5">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control mb-2 mr-sm-2" rows="5" cols="5" id="chat-msg"
+                                                    placeholder="Type Message..."></textarea>
+                                                <button type="submit" class="btn btn-primary mb-2 btn-md" id="chat-send"
+                                                    style="float: right">Send</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
                                 <!-- END OF CHAT -->
                             </div>

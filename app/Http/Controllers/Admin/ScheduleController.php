@@ -2,26 +2,33 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
+use App\Models\Chat;
+use App\Models\Topics;
 use App\Models\Schedules;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Chat;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class ScheduleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
-        if (!in_array($user->role_id, [3])) {
+        $param = $request->get('topic_id');
+        if (!in_array($user->role_id, [2, 3])) {
             abort(403);
         }
 
         if (request()->ajax()) {
-            $query = Schedules::latest()->get();
+
+            if (isset($param)) {
+                $query = Schedules::where('topic_id', $param)->latest()->get();
+            } else {
+                $query = Schedules::latest()->get();
+            }
 
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
@@ -273,5 +280,12 @@ class ScheduleController extends Controller
 
         $chats = Chat::where('schedule_id', $id)->get();
         return view('pages.admin.schedules.show', compact('item', 'chats'));
+    }
+
+    public function rekap()
+    {
+        $topics = Topics::get();
+
+        return view('pages.admin.schedules.rekap', compact('topics'));
     }
 }

@@ -55,22 +55,28 @@
                                 </div>
                             @endif
                             {{-- List Data --}}
-                            <table class="table table-hover table-sm" id="crudTable">
+                            <table class="table table-hover table-sm">
                                 <thead>
                                     <tr>
                                         <th width="10">No.</th>
-                                        <th>Foto</th>
-                                        <th>Mahasiswa</th>
-                                        {{-- <th>Fakultas</th>
-                                        <th>Prodi</th> --}}
                                         <th>Topik</th>
-                                        <th>Layanan</th>
-                                        <th>Status</th>
-                                        <th>Tanggal Diajukan</th>
+                                        <th>Total</th>
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+                                    @foreach ($topics as $item)
+                                        <tr style="font-weight: bold">
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td style="width: 15%">{{ $item->title }}</td>
+                                            <td>{{ $item->schedules->count() }}</td>
+                                            <td style="width: 10%">
+                                                <a href="{{ route('schedules.index') }}?topic_id={{ $item->id }}"
+                                                    class="btn btn-success">Lihat Detail</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -81,59 +87,4 @@
 @endsection
 
 @push('addon-script')
-    <script>
-        var datatable = $('#crudTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ordering: true,
-            ajax: {
-                url: '{!! url()->current() !!}?topic_id={!! request()->get("topic_id") !!}',
-            },
-            columns: [{
-                    "data": 'DT_RowIndex',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'profile',
-                    name: 'profile'
-                },
-                {
-                    data: 'patient',
-                    name: 'patient'
-                },
-                // {
-                //     data: 'faculty',
-                //     name: 'faculty'
-                // },
-                // {
-                //     data: 'study_program',
-                //     name: 'study_program'
-                // },
-                {
-                    data: 'topic',
-                    name: 'topic'
-                },
-                {
-                    data: 'type',
-                    name: 'type'
-                },
-                {
-                    data: 'status',
-                    name: 'status'
-                },
-                {
-                    data: 'created_at',
-                    name: 'created_at'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searcable: false,
-                    width: '10%'
-                },
-            ]
-        });
-    </script>
 @endpush
